@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | Paramount Enterprises{% endblock %}
+
+{% block content %}
+<section class="dashboard-shell">
+    <div class="panel dashboard-head">
+        <div>
+            <p class="muted">Welcome back</p>
+            <h1>{{ investor.full_name }}</h1>
+            <p class="muted">PME ID: {{ investor.investor_id }}</p>
+        </div>
+        <span class="status-pill {% if investor.status == 'ACTIVE' %}active{% endif %}">
+            {{ investor.status }}
+        </span>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span>Total Team</span>
+            <strong>{{ total_team }}</strong>
+        </div>
+        <div class="stat-card">
+            <span>Direct Referrals</span>
+            <strong>{{ direct_count }}</strong>
+        </div>
+        <div class="stat-card">
+            <span>Referral Access</span>
+            <strong>{% if can_refer %}Active{% else %}Blocked{% endif %}</strong>
+        </div>
+        <div class="stat-card">
+            <span>Current Week</span>
+            <strong>{{ monday|date:"M d" }} - {{ saturday|date:"M d" }}</strong>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Referral Tree</h2>
+        <p class="muted">Your referral chain is shown up to 6 levels.</p>
+        <div class="tree-wrap">
+            <div id="tree"></div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>Weekly Referral Status</h2>
+        <p class="muted">Current week is green. Previous weeks are red. Week runs Monday to Saturday.</p>
+
+        <div class="week-container">
+            {% for week in current_week %}
+                <div class="week-card current-week">
+                    <span>Current Week {{ week.week_number }}</span>
+                    <strong>{{ week.total_referrals }} referrals</strong>
+                    <p>{{ week.monday|date:"M d, Y" }} - {{ week.saturday|date:"M d, Y" }}</p>
+                    <p>Bonus: Rs. {{ week.bonus }}</p>
+                </div>
+            {% endfor %}
+
+            {% for week in previous_weeks %}
+                <div class="week-card previous-week">
+                    <span>Previous Week {{ week.week_number }}</span>
+                    <strong>{{ week.total_referrals }} referrals</strong>
+                    <p>{{ week.monday|date:"M d, Y" }} - {{ week.saturday|date:"M d, Y" }}</p>
+                    <p>Bonus: Rs. {{ week.bonus }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{{ tree_data|json_script:"tree-data" }}
+<script>
+(() => {
+    const data = JSON.parse(document.getElementById("tree-data").textContent);
+    const container = document.getElementById("tree");
+    const levels = [];
+    const nodes = [];
+    const links = [];
+    const horizontalGap = 130;
+    const verticalGap = 95;
+    const topPad = 54;
+    const sidePad = 70;
+
+    function walk(node, depth = 0, parent = null) {
+        if (!node || depth > 6) return;
+        if (!levels[depth]) levels[depth] = [];
+        const wrapped = { data: node, depth, parent };
+        levels[depth].push(wrapped);
+        nodes.push(wrapped);
+        if (parent) links.push({ source: parent, target: wrapped });
+        (node.children || []).forEach(child => walk(child, depth + 1, wrapped));
+    }
+
+    walk(data);
+
+    const maxLevelSize = Math.max(...levels.map(level => level.length), 1);
+    const width = Math.max(860, maxLevelSize * horizontalGap + sidePad * 2);
+    const height = Math.max(420, levels.length * verticalGap + topPad * 2);
+
+    levels.forEach((level, depth) => {
+        const span = width - sidePad * 2;
+        const step = span / Math.max(level.length, 1);
+        level.forEach((node, index) => {
+            node.x = sidePad + step * index + step / 2;
+            node.y = topPad + depth * verticalGap;
+        });
+    });
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", width);
+    svg.setAttribute("height", height);
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+
+    links.forEach(link => {
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", link.source.x);
+        line.setAttribute("y1", link.source.y + 24);
+        line.setAttribute("x2", link.target.x);
+        line.setAttribute("y2", link.target.y - 24);
+        svg.appendChild(line);
+    });
+
+    nodes.forEach(node => {
+        const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        group.setAttribute("transform", `translate(${node.x},${node.y})`);
+
+        const rect = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "rect"
+        );
+
+        rect.setAttribute(
+            "x",
+            "-50"
+        );
+
+        rect.setAttribute(
+            "y",
+            "-30"
+        );
+
+        rect.setAttribute(
+            "width",
+            "100"
+        );
+
+        rect.setAttribute(
+            "height",
+            "60"
+        );
+
+
+        // rounded rectangle corners
+        rect.setAttribute(
+            "rx",
+            "8"
+        );
+
+
+        rect.setAttribute(
+            "fill",
+            node.data.status === "ACTIVE"
+                ? "#15592d"
+                : "#bd2d2d"
+        );
+
+
+        group.appendChild(rect);
+
+        const id = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        id.setAttribute("text-anchor", "middle");
+        id.setAttribute("dy", "4");
+        id.textContent = node.data.id;
+        group.appendChild(id);
+
+        const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        label.setAttribute("text-anchor", "middle");
+        label.setAttribute("dy", "44");
+        label.setAttribute("class", "tree-label");
+        label.textContent = node.data.position || "Root";
+        group.appendChild(label);
+
+        svg.appendChild(group);
+    });
+
+    container.innerHTML = "";
+    container.appendChild(svg);
+})();
+</script>
+{% endblock %}

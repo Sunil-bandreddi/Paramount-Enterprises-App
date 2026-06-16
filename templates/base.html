@@ -1,0 +1,89 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Paramount Enterprises{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/dashboard/">
+            <span class="brand-mark">P</span>
+            <span>
+                <strong>Paramount</strong>
+                <small>Enterprises</small>
+            </span>
+        </a>
+
+        <nav class="site-nav" aria-label="Primary">
+            <a href="#">Home</a>
+            <a href="#">About Us</a>
+            <a href="#">Gallery</a>
+            <a href="#">Projects</a>
+            <a href="#">Contact Us</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            {% if request.user.is_authenticated %}
+
+                <a href="/dashboard/">Dashboard</a>
+
+                <a class="button-link" href="/logout/">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="/login/">Login</a>
+
+                <a class="button-link" href="/register/">
+                    Register
+                </a>
+
+            {% endif %}
+
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div>
+                <div class="brand footer-brand">
+                    <span class="brand-mark">P</span>
+                    <span>
+                        <strong>Paramount Enterprises</strong>
+                        <small>Farmland Investments</small>
+                    </span>
+                </div>
+                <p>India's trusted partner in managed farmland investments, growing wealth rooted in the earth.</p>
+            </div>
+
+            <div>
+                <h4>Explore</h4>
+                <a href="#">Home</a>
+                <a href="#">About Us</a>
+                <a href="#">Gallery</a>
+                <a href="#">Projects</a>
+                <a href="#">Contact Us</a>
+            </div>
+
+            <div>
+                <h4>Reach Us</h4>
+                <p>Bangalore, Karnataka, India</p>
+                <p>+91 98765 43210</p>
+                <p>hello@paramount.in</p>
+            </div>
+        </div>
+        <div class="copyright">&copy; 2026 Paramount Enterprises. All rights reserved.</div>
+    </footer>
+</body>
+</html>

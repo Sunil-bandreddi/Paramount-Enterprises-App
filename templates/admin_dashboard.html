@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="admin-container">
+
+
+    <!-- Header -->
+
+    <div class="admin-header card">
+
+        <h1>
+            Paramount Admin Dashboard
+        </h1>
+
+        <p>
+            Investor Management & Referral Monitoring
+        </p>
+
+    </div>
+
+
+
+    <!-- Statistics Section -->
+
+
+    <div class="stats-container">
+
+
+        <div class="stat-card">
+
+            <h3>
+                Total Users
+            </h3>
+
+            <h2>
+                {{total_users}}
+            </h2>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Active Users
+            </h3>
+
+            <h2>
+                {{active_users}}
+            </h2>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Pending Users
+            </h3>
+
+            <h2>
+                {{pending_users}}
+            </h2>
+
+        </div>
+
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Inactive Users
+            </h3>
+
+            <h2>
+                {{inactive_users}}
+            </h2>
+
+        </div>
+
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Left Positions
+            </h3>
+
+            <h2>
+                {{left}}
+            </h2>
+
+        </div>
+
+
+
+
+        <div class="stat-card">
+
+            <h3>
+                Right Positions
+            </h3>
+
+            <h2>
+                {{right}}
+            </h2>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <!-- Investor Management -->
+
+
+    <div class="admin-table-card card">
+
+
+        <h2>
+            Investor Management
+        </h2>
+
+
+
+        <div class="table-responsive">
+
+
+            <table>
+
+
+                <thead>
+
+
+                    <tr>
+
+
+                        <th>
+                            PME ID
+                        </th>
+
+
+                        <th>
+                            Name
+                        </th>
+
+
+                        <th>
+                            Mobile
+                        </th>
+
+
+                        <th>
+                            Status
+                        </th>
+
+
+                        <th>
+                            Action
+                        </th>
+
+
+                    </tr>
+
+
+                </thead>
+
+
+
+                <tbody>
+
+
+
+                {% for user in users %}
+
+
+                <tr>
+
+
+                    <td>
+                        {{user.investor_id}}
+                    </td>
+
+
+
+                    <td>
+                        {{user.full_name}}
+                    </td>
+
+
+
+                    <td>
+                        {{user.mobile}}
+                    </td>
+
+
+
+                    <td>
+
+                        <span class="status {{user.status|lower}}">
+
+                            {{user.status}}
+
+                        </span>
+
+
+                    </td>
+
+
+
+
+                    <td>
+
+
+                    {% if user.status == "ACTIVE" %}
+
+
+                        <form method="POST"
+                            action="{% url 'administrator:change_status' user.id %}">
+
+
+                            {% csrf_token %}
+
+
+                            <button class="action-btn deactivate">
+
+                            Deactivate
+
+                            </button>
+
+
+                        </form>
+
+
+
+
+                    {% elif user.status == "INACTIVE" %}
+
+
+
+                        <form method="POST"
+                            action="{% url 'administrator:change_status' user.id %}">
+
+
+                            {% csrf_token %}
+
+
+                            <button class="action-btn activate">
+
+                            Activate
+
+                            </button>
+
+
+                        </form>
+
+
+
+
+
+                    {% elif user.status == "PENDING" %}
+
+
+
+                        <a href="{% url 'administrator:change_status' user.id %}">
+
+
+                            <button class="action-btn activate">
+
+                                Activate
+
+                            </button>
+
+
+                        </a>
+
+
+
+                    {% endif %}
+
+
+
+                    </td>
+
+
+
+                </tr>
+
+
+
+                {% empty %}
+
+
+                <tr>
+
+                    <td colspan="5">
+
+                        No Investors Found
+
+                    </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+
+                </tbody>
+
+
+            </table>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+{% endblock %}
