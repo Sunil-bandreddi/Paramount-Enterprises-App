@@ -19,7 +19,66 @@ from referral.services import (
 
 
 
+def home(request):
 
+    return render(
+        request,
+        "home.html"
+    )
+
+
+
+
+def about(request):
+
+    return render(
+        request,
+        "about.html"
+    )
+
+
+
+
+def projects(request):
+
+    return render(
+        request,
+        "projects.html"
+    )
+
+
+
+
+def gallery(request):
+
+    return render(
+        request,
+        "gallery.html"
+    )
+
+
+
+
+def contact(request):
+
+    return render(
+        request,
+        "contact.html"
+    )
+
+
+
+
+def terms(request):
+
+    return render(
+        request,
+        "terms.html"
+    )
+
+# ============================
+# LOGIN
+# ============================
 
 # ============================
 # LOGIN
@@ -27,26 +86,29 @@ from referral.services import (
 
 def login_view(request):
 
+    if request.method == "POST":
 
-    if request.method=="POST":
 
+        # Aadhar Number entered by user
 
-        username=request.POST.get(
+        aadhar = request.POST.get(
             "username"
         )
 
 
-        password=request.POST.get(
+        password = request.POST.get(
             "password"
         )
 
 
 
-        user=authenticate(
+        # Authenticate using Aadhar
+
+        user = authenticate(
 
             request,
 
-            username=username,
+            username=aadhar,
 
             password=password
 
@@ -58,9 +120,13 @@ def login_view(request):
 
 
             login(
+
                 request,
+
                 user
+
             )
+
 
 
             # ADMIN LOGIN
@@ -68,12 +134,13 @@ def login_view(request):
             if user.is_staff or user.is_superuser:
 
 
-                return redirect("administrator:admin_dashboard")
+                return redirect(
+                    "administrator:admin_dashboard"
+                )
 
 
 
             # INVESTOR LOGIN
-
 
             if hasattr(
                 user,
@@ -95,8 +162,10 @@ def login_view(request):
             "login.html",
 
             {
+
                 "error":
-                "Invalid username or password"
+                "Invalid Aadhar number or password"
+
             }
 
         )
@@ -121,181 +190,155 @@ def login_view(request):
 # REGISTER
 # ============================
 
+# ============================
+# REGISTER
+# ============================
 
-# def register(request):
+# ============================
+# REGISTER
+# ============================
 
+def register(request):
 
+    if request.method == "POST":
 
-
-    if request.method=="POST":
-
-
-        form=RegisterForm(
-            request.POST
-        )
+        form = RegisterForm(request.POST)
 
 
         if form.is_valid():
 
+            aadhar = form.cleaned_data["aadhar"]
 
 
-            aadhar=form.cleaned_data[
-                "aadhar"
-            ]
 
-
+            # ============================
+            # AADHAR VALIDATION
+            # ============================
 
             if not check_aadhar_allowed(aadhar):
 
-
                 return render(
-
                     request,
-
                     "register.html",
-
                     {
-                        "form":form,
-
+                        "form": form,
                         "error":
                         "Aadhar already used and 6 level chain not completed"
                     }
-
                 )
 
 
 
+            # ============================
+            # SPONSOR VALIDATION
+            # ============================
 
+            sponsor, error = validate_sponsor(
 
-            sponsor,error=validate_sponsor(
+                form.cleaned_data.get("sponsor"),
 
-                form.cleaned_data["sponsor"],
-
-                form.cleaned_data["position"]
+                form.cleaned_data.get("position")
 
             )
-
 
 
             if error:
 
-
                 return render(
-
                     request,
-
                     "register.html",
-
                     {
-                        "form":form,
-
-                        "error":error
+                        "form": form,
+                        "error": error
                     }
-
                 )
 
 
 
+            # ============================
+            # CREATE DJANGO USER
+            # USERNAME = AADHAR NUMBER
+            # ============================
 
 
+            aadhar = form.cleaned_data["aadhar"]
 
-            user=User.objects.create_user(
 
-                username=form.cleaned_data["email"],
+            user = User.objects.create_user(
 
-                password=form.cleaned_data["password"]
+                username=aadhar,
+
+                password=form.cleaned_data["password"],
+
+                email=form.cleaned_data["email"]
 
             )
 
 
+            # Optional email save
+
+            user.email = form.cleaned_data.get("email")
+
+            user.save()
 
 
 
-            investor=Investor.objects.create(
+            # ============================
+            # CREATE INVESTOR PROFILE
+            # ============================
+
+
+            investor = Investor.objects.create(
 
                 user=user,
 
 
-                investor_id=
-                generate_investor_id(),
+                investor_id=generate_investor_id(),
 
 
-
-                full_name=
-                form.cleaned_data["full_name"],
+                full_name=form.cleaned_data["full_name"],
 
 
-
-                dob=
-                form.cleaned_data["dob"],
+                dob=form.cleaned_data["dob"],
 
 
-
-                mobile=
-                form.cleaned_data["mobile"],
+                mobile=form.cleaned_data["mobile"],
 
 
-
-                email=
-                form.cleaned_data["email"],
-
+                email=form.cleaned_data["email"],
 
 
                 aadhar=aadhar,
 
 
-
-                pan=
-                form.cleaned_data["pan"],
+                pan=form.cleaned_data["pan"],
 
 
+                account_no=form.cleaned_data["account_no"],
 
 
-                account_no=
-                form.cleaned_data["account_no"],
+                bank_name=form.cleaned_data["bank_name"],
 
 
-
-                bank_name=
-                form.cleaned_data["bank_name"],
+                branch=form.cleaned_data["branch"],
 
 
-
-                branch=
-                form.cleaned_data["branch"],
+                ifsc_code=form.cleaned_data["ifsc_code"],
 
 
-
-                ifsc_code=
-                form.cleaned_data["ifsc_code"],
+                address=form.cleaned_data["address"],
 
 
+                city=form.cleaned_data["city"],
 
 
-                address=
-                form.cleaned_data["address"],
+                state=form.cleaned_data["state"],
 
 
-
-                city=
-                form.cleaned_data["city"],
+                nominee=form.cleaned_data["nominee"],
 
 
-
-                state=
-                form.cleaned_data["state"],
-
-
-
-
-                nominee=
-                form.cleaned_data["nominee"],
-
-
-
-                nominee_relation=
-                form.cleaned_data["nominee_relation"],
-
+                nominee_relation=form.cleaned_data["nominee_relation"],
 
 
                 status="PENDING"
@@ -304,38 +347,35 @@ def login_view(request):
 
 
 
+            # ============================
+            # CREATE REFERRAL TREE
+            # ============================
+
+
+            if sponsor:
+
+
+                ReferralTree.objects.create(
+
+                    investor=investor,
+
+                    sponsor=sponsor,
+
+                    position=form.cleaned_data["position"],
+
+                    level=calculate_level(sponsor)
+
+                )
 
 
 
-            ReferralTree.objects.create(
-
-                investor=investor,
-
-
-                sponsor=sponsor,
-
-
-                position=form.cleaned_data["position"],
-
-
-                level=
-                calculate_level(sponsor)
-
-            )
-
-
-
-
-            return redirect(
-                "login"
-            )
-
+            return redirect("login")
 
 
 
     else:
 
-        form=RegisterForm()
+        form = RegisterForm()
 
 
 
@@ -352,35 +392,9 @@ def login_view(request):
     )
 
 
-from django.shortcuts import render, redirect
-from .forms import RegisterForm
 
 
-def register(request):
 
-    if request.method == "POST":
-
-        form = RegisterForm(request.POST)
-
-        if form.is_valid():
-
-            user = form.save()
-
-            return redirect('login')
-
-
-    else:
-
-        form = RegisterForm()
-
-
-    return render(
-        request,
-        "register.html",
-        {
-            "form": form
-        }
-    )
 
 
 from rest_framework.decorators import api_view

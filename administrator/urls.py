@@ -3,15 +3,16 @@ from django.urls import path
 from .views import (
     admin_dashboard,
     change_status,
-    investor_chain
+    investor_chain,
+    download_report
 )
 
 
-app_name = "administrator"
+app_name="administrator"
 
 
 
-urlpatterns = [
+urlpatterns=[
 
 
     path(
@@ -34,6 +35,14 @@ urlpatterns = [
         "chain/<int:id>/",
         investor_chain,
         name="investor_chain"
+    ),
+
+
+
+    path(
+        "download-report/",
+        download_report,
+        name="download_report"
     ),
 
 

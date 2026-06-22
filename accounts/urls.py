@@ -19,11 +19,11 @@ urlpatterns = [
 
 
 
-    # path(
-    #     'register/',
-    #     register,
-    #     name='register'
-    # ),
+    path(
+        'register/',
+        register,
+        name='register'
+    ),
     path('api/register/',register_api, name='register_api'),
 
 

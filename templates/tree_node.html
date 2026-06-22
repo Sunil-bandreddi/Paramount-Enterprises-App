@@ -1,0 +1,84 @@
+<div class="tree-node">
+
+
+<div class="card">
+
+
+<h3>
+
+{{node.investor.investor_id}}
+
+</h3>
+
+
+<p>
+
+{{node.investor.full_name}}
+
+</p>
+
+
+
+<span class="status {{node.investor.status|lower}}">
+
+{{node.investor.status}}
+
+</span>
+
+
+
+{% if node.position %}
+
+<p>
+
+Position:
+
+{{node.position}}
+
+</p>
+
+
+{% endif %}
+
+
+
+<p>
+
+Level:
+
+{{node.level}}
+
+</p>
+
+
+</div>
+
+
+
+
+
+{% if node.children %}
+
+
+<div class="children">
+
+
+{% for child in node.children %}
+
+
+{% include "tree_node.html" with node=child %}
+
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+{% endif %}
+
+
+
+</div>

@@ -1,0 +1,494 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block title %}
+Gallery — Paramount Enterprises
+{% endblock %}
+
+
+
+{% block content %}
+
+
+
+<section class="page-hero">
+
+<div class="container">
+
+<span class="section-tag">
+GALLERY
+</span>
+
+
+<h1>
+Project Directories
+</h1>
+
+
+<p>
+Select a project folder to explore farmland images.
+</p>
+
+
+</div>
+
+</section>
+
+
+
+
+
+
+
+<section class="gallery-section">
+
+
+<div class="container">
+
+
+
+
+
+<div class="gallery-grid">
+
+
+
+
+
+
+<!-- MACADAMIA -->
+
+<div class="gallery-folder"
+onclick="openGallery('macadamia')">
+
+
+<div class="folder-image">
+
+<img src="{% static 'images/macadamia-farm.png' %}">
+
+</div>
+
+
+<h3>
+Macadamia Farm
+</h3>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- MALABAR -->
+
+
+<div class="gallery-folder"
+onclick="openGallery('malabar')">
+
+
+<div class="folder-image">
+
+<img src="{% static 'images/malabar-farm.png' %}">
+
+</div>
+
+
+<h3>
+Malabar Farm
+</h3>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- MAHOGANY -->
+
+
+<div class="gallery-folder"
+onclick="openGallery('mahogany')">
+
+
+<div class="folder-image">
+
+<img src="{% static 'images/mahogany-farm.png' %}">
+
+</div>
+
+
+<h3>
+Mahogany Farm
+</h3>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- RED SANDAL -->
+
+
+<div class="gallery-folder"
+onclick="openGallery('red')">
+
+
+<div class="folder-image">
+
+<img src="{% static 'images/red-sandalwood-farm.png' %}">
+
+</div>
+
+
+<h3>
+Red Sandalwood Farm
+</h3>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- SANDALWOOD -->
+
+
+<div class="gallery-folder"
+onclick="openGallery('sandal')">
+
+
+<div class="folder-image">
+
+<img src="{% static 'images/sandalwood-farm.png' %}">
+
+</div>
+
+
+<h3>
+Sandalwood Farm
+</h3>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- MANGO -->
+
+
+<div class="gallery-folder"
+onclick="openGallery('mango')">
+
+
+<div class="folder-image">
+
+<img src="{% static 'images/mango-farm.png' %}">
+
+</div>
+
+
+<h3>
+Mango Farm
+</h3>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- IMAGE VIEW -->
+
+<div id="galleryContent"
+class="gallery-grid hidden">
+
+
+
+
+
+
+<div class="gallery-card hidden macadamia"
+onclick="openLightbox(this)">
+
+<img src="{% static 'images/macadamia-farm.png' %}">
+
+<h3>
+Macadamia Farm
+</h3>
+
+<p>
+Premium macadamia plantation.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="gallery-card hidden malabar"
+onclick="openLightbox(this)">
+
+<img src="{% static 'images/malabar-farm.png' %}">
+
+<h3>
+Malabar Farm
+</h3>
+
+<p>
+Managed farmland project.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="gallery-card hidden mahogany"
+onclick="openLightbox(this)">
+
+<img src="{% static 'images/mahogany-farm.png' %}">
+
+<h3>
+Mahogany Farm
+</h3>
+
+<p>
+High value timber plantation.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="gallery-card hidden red"
+onclick="openLightbox(this)">
+
+<img src="{% static 'images/red-sandalwood-farm.png' %}">
+
+<h3>
+Red Sandalwood Farm
+</h3>
+
+<p>
+Premium plantation opportunity.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="gallery-card hidden sandal"
+onclick="openLightbox(this)">
+
+<img src="{% static 'images/sandalwood-farm.png' %}">
+
+<h3>
+Sandalwood Farm
+</h3>
+
+<p>
+Long term managed sandalwood growth.
+</p>
+
+</div>
+
+
+
+
+
+
+
+<div class="gallery-card hidden mango"
+onclick="openLightbox(this)">
+
+<img src="{% static 'images/mango-farm.png' %}">
+
+<h3>
+Mango Farm
+</h3>
+
+<p>
+Commercial mango orchard.
+</p>
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- LIGHTBOX -->
+
+
+<div id="lightbox"
+class="lightbox"
+onclick="closeLightbox()">
+
+
+
+<button>
+×
+</button>
+
+
+<img id="lightboxImage">
+
+
+</div>
+
+
+
+
+
+
+
+
+<script>
+
+
+function openGallery(type){
+
+
+document
+.getElementById("galleryContent")
+.classList.remove("hidden");
+
+
+
+let cards =
+document.querySelectorAll(".gallery-card");
+
+
+cards.forEach(card=>{
+
+card.classList.add("hidden");
+
+});
+
+
+
+document
+.querySelectorAll("." + type)
+.forEach(card=>{
+
+card.classList.remove("hidden");
+
+});
+
+
+
+}
+
+
+
+
+
+
+function openLightbox(card){
+
+
+document
+.getElementById("lightboxImage")
+.src =
+card.querySelector("img").src;
+
+
+document
+.getElementById("lightbox")
+.style.display="flex";
+
+
+}
+
+
+
+
+
+
+function closeLightbox(){
+
+
+document
+.getElementById("lightbox")
+.style.display="none";
+
+
+}
+
+
+</script>
+
+
+
+
+{% endblock %}

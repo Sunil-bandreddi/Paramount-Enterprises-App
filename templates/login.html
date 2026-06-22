@@ -1,33 +1,217 @@
 {% extends 'base.html' %}
-{% block title %}Investor Login | Paramount Enterprises{% endblock %}
+
+{% block title %}
+Investor Login | Paramount Enterprises
+{% endblock %}
+{% load static %}
+
 
 {% block content %}
-<section class="page-shell" style="max-width: 520px;">
-    <div class="form-card">
-        <div class="form-heading">
-            <span class="brand-mark">P</span>
-            <h1>Investor Login</h1>
-            <p>Access your Paramount investment dashboard</p>
-        </div>
 
-        {% if error %}
-            <div class="error-box">{{ error }}</div>
-        {% endif %}
 
-        <form method="POST">
-            {% csrf_token %}
-            <div class="field">
-                <label for="id_username">Email</label>
-                <input id="id_username" name="username" placeholder="Enter your Email" required>
-            </div>
 
-            <div class="field" style="margin-top: 18px;">
-                <label for="id_password">Password</label>
-                <input id="id_password" type="password" name="password" placeholder="Password" required>
-            </div>
+<section class="form-page">
 
-            <button class="primary-button" type="submit">Login</button>
-        </form>
-    </div>
+
+
+<div class="form-card">
+
+
+
+
+
+<div class="form-heading"
+style="text-align:center;">
+
+
+
+<div class="brand-mark"
+style="
+margin:auto;
+margin-bottom:20px;
+">
+
+<img src="{% static 'images/logo.png' %}" class="logo-image" alt="Company Logo">
+
+</div>
+
+
+
+<h1>
+
+User Login
+
+</h1>
+
+
+
+<p>
+
+Access your Paramount User Dashboard
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+{% if error %}
+
+
+<div class="error-message">
+
+{{ error }}
+
+</div>
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+<form method="POST">
+
+
+{% csrf_token %}
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="id_username">
+Aadhar Number
+
+</label>
+
+
+
+<input
+
+id="id_username"
+
+name="username"
+
+type="text"
+
+placeholder="Enter your Aadhar Number"
+
+required
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="form-group">
+
+
+<label for="id_password">
+
+Password
+
+</label>
+
+
+
+
+<input
+
+id="id_password"
+
+type="password"
+
+name="password"
+
+placeholder="Password"
+
+required
+
+>
+
+
+</div>
+
+
+
+
+
+
+
+
+<button
+
+class="form-button"
+
+type="submit"
+
+>
+
+Login
+
+</button>
+
+
+
+
+
+
+
+</form>
+
+
+
+
+
+<div class="form-link">
+
+
+Don't have an account?
+
+
+<a href="/register/">
+
+Register
+
+</a>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
 </section>
+
+
+
+
 {% endblock %}

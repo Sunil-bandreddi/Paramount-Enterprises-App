@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Register | Paramount Enterprises{% endblock %}
-
+{% load static %}
 {% block content %}
 <section class="page-shell">
     <div class="form-card">
         <div class="form-heading">
-            <span class="brand-mark">P</span>
-            <h1>Create Investor Account</h1>
-            <p>Complete the registration form to start investing</p>
+            <!-- <img src="{% static 'images/logo.png' %}" class="logo-image" alt="Company Logo" style="margin-left: 50%;"> -->
+            <h1>Join ID: Free Registration</h1>
+            <p>Complete the Registration to book your plot for 10k (200 Yards) for free and more excited benefits.</p>
         </div>
 
         {% if form.non_field_errors %}
@@ -23,7 +23,7 @@
         <form method="POST" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
 
-            <div class="section-title">Personal &amp; Sponsor Information</div>
+            <div class="section-title">Personal User Information</div>
             <div class="form-grid">
                 <div class="field">
                     <label for="id_full_name">Full Name *</label>

@@ -1,11 +1,20 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 
 from django.contrib.auth.decorators import login_required,user_passes_test
 
+from django.http import HttpResponse
+
+from openpyxl import Workbook
 
 from accounts.models import Investor
 
-from referral.models import ReferralTree
+from referral.models import WeeklyActivity
+
+from .utils import (
+    get_pair_details,
+    build_chain
+)
+
 
 
 
@@ -32,12 +41,34 @@ def admin_dashboard(request):
 
 
 
+    investor_data=[]
+
+
+    for user in users:
+
+
+        pair=get_pair_details(
+            user
+        )
+
+
+        investor_data.append({
+
+            "user":user,
+
+            "pair":pair
+
+        })
+
+
+
+
+
     context={
 
 
         "total_users":
         users.count(),
-
 
 
         "active_users":
@@ -61,11 +92,11 @@ def admin_dashboard(request):
 
 
 
-        "users":users
+        "investors":
+        investor_data
 
 
     }
-
 
 
     return render(
@@ -83,25 +114,30 @@ def admin_dashboard(request):
 
 
 
+
+
+
 @login_required
 @user_passes_test(admin_check)
 def change_status(request,id):
 
 
-    investor=Investor.objects.get(
+    investor=get_object_or_404(
+
+        Investor,
+
         id=id
+
     )
 
 
 
     if investor.status=="ACTIVE":
 
-
         investor.status="INACTIVE"
 
 
     else:
-
 
         investor.status="ACTIVE"
 
@@ -112,8 +148,13 @@ def change_status(request,id):
 
 
     return redirect(
-    "administrator:admin_dashboard"
-)
+
+        "administrator:admin_dashboard"
+
+    )
+
+
+
 
 
 
@@ -126,53 +167,20 @@ def change_status(request,id):
 def investor_chain(request,id):
 
 
-    investor=Investor.objects.get(
+    investor=get_object_or_404(
+
+        Investor,
+
         id=id
+
     )
 
 
-    levels={}
+    tree=build_chain(
 
+        investor
 
-
-    def count_level(user,level):
-
-
-        if level>6:
-
-            return
-
-
-
-        children=ReferralTree.objects.filter(
-
-            sponsor=user
-
-        )
-
-
-        levels[level]=levels.get(level,0)+children.count()
-
-
-
-        for child in children:
-
-
-            count_level(
-
-                child.investor,
-
-                level+1
-
-            )
-
-
-
-    count_level(
-        investor,
-        1
     )
-
 
 
     return render(
@@ -183,10 +191,100 @@ def investor_chain(request,id):
 
         {
 
-        "investor":investor,
-
-        "levels":levels
+        "tree":tree
 
         }
 
     )
+
+
+
+
+
+
+
+
+
+
+
+@login_required
+@user_passes_test(admin_check)
+def download_report(request):
+
+
+    wb=Workbook()
+
+
+    ws=wb.active
+
+    ws.title="Weekly Report"
+
+
+
+    ws.append([
+
+        "Investor ID",
+
+        "Name",
+
+        "Status",
+
+        "Left",
+
+        "Right",
+
+        "Pairs"
+
+    ])
+
+
+
+
+    for investor in Investor.objects.all():
+
+
+        pair=get_pair_details(
+            investor
+        )
+
+
+
+        ws.append([
+
+            investor.investor_id,
+
+            investor.full_name,
+
+            investor.status,
+
+            pair["left"],
+
+            pair["right"],
+
+            pair["pairs"]
+
+        ])
+
+
+
+
+    response=HttpResponse(
+
+        content_type=
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+    )
+
+
+
+    response[
+        "Content-Disposition"
+    ] = "attachment; filename=weekly_report.xlsx"
+
+
+
+    wb.save(response)
+
+
+
+    return response

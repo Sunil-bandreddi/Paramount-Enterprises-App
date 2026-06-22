@@ -7,336 +7,615 @@
 <div class="admin-container">
 
 
-    <!-- Header -->
 
-    <div class="admin-header card">
+<div class="admin-header card">
 
-        <h1>
-            Paramount Admin Dashboard
-        </h1>
 
-        <p>
-            Investor Management & Referral Monitoring
-        </p>
+<h1>
+Paramount Admin Dashboard
+</h1>
 
-    </div>
 
+<p>
+Investor Management & Binary Network Monitoring
+</p>
 
 
-    <!-- Statistics Section -->
+</div>
 
 
-    <div class="stats-container">
 
 
-        <div class="stat-card">
 
-            <h3>
-                Total Users
-            </h3>
 
-            <h2>
-                {{total_users}}
-            </h2>
 
-        </div>
+<!-- Statistics -->
 
 
+<div class="stats-container">
 
-        <div class="stat-card">
 
-            <h3>
-                Active Users
-            </h3>
 
-            <h2>
-                {{active_users}}
-            </h2>
+<div class="stat-card">
 
-        </div>
+<h3>
+Total Users
+</h3>
 
+<h2>
+{{total_users}}
+</h2>
 
+</div>
 
-        <div class="stat-card">
 
-            <h3>
-                Pending Users
-            </h3>
 
-            <h2>
-                {{pending_users}}
-            </h2>
 
-        </div>
 
+<div class="stat-card">
 
+<h3>
+Active Users
+</h3>
 
+<h2>
+{{active_users}}
+</h2>
 
-        <div class="stat-card">
+</div>
 
-            <h3>
-                Inactive Users
-            </h3>
 
-            <h2>
-                {{inactive_users}}
-            </h2>
 
-        </div>
 
 
+<div class="stat-card">
 
+<h3>
+Pending Users
+</h3>
 
-        <div class="stat-card">
+<h2>
+{{pending_users}}
+</h2>
 
-            <h3>
-                Left Positions
-            </h3>
+</div>
 
-            <h2>
-                {{left}}
-            </h2>
 
-        </div>
 
 
 
+<div class="stat-card">
 
-        <div class="stat-card">
+<h3>
+Inactive Users
+</h3>
 
-            <h3>
-                Right Positions
-            </h3>
+<h2>
+{{inactive_users}}
+</h2>
 
-            <h2>
-                {{right}}
-            </h2>
-
-        </div>
-
-
-
-    </div>
-
-
-
-
-
-
-
-    <!-- Investor Management -->
-
-
-    <div class="admin-table-card card">
-
-
-        <h2>
-            Investor Management
-        </h2>
-
-
-
-        <div class="table-responsive">
-
-
-            <table>
-
-
-                <thead>
-
-
-                    <tr>
-
-
-                        <th>
-                            PME ID
-                        </th>
-
-
-                        <th>
-                            Name
-                        </th>
-
-
-                        <th>
-                            Mobile
-                        </th>
-
-
-                        <th>
-                            Status
-                        </th>
-
-
-                        <th>
-                            Action
-                        </th>
-
-
-                    </tr>
-
-
-                </thead>
-
-
-
-                <tbody>
-
-
-
-                {% for user in users %}
-
-
-                <tr>
-
-
-                    <td>
-                        {{user.investor_id}}
-                    </td>
-
-
-
-                    <td>
-                        {{user.full_name}}
-                    </td>
-
-
-
-                    <td>
-                        {{user.mobile}}
-                    </td>
-
-
-
-                    <td>
-
-                        <span class="status {{user.status|lower}}">
-
-                            {{user.status}}
-
-                        </span>
-
-
-                    </td>
-
-
-
-
-                    <td>
-
-
-                    {% if user.status == "ACTIVE" %}
-
-
-                        <form method="POST"
-                            action="{% url 'administrator:change_status' user.id %}">
-
-
-                            {% csrf_token %}
-
-
-                            <button class="action-btn deactivate">
-
-                            Deactivate
-
-                            </button>
-
-
-                        </form>
-
-
-
-
-                    {% elif user.status == "INACTIVE" %}
-
-
-
-                        <form method="POST"
-                            action="{% url 'administrator:change_status' user.id %}">
-
-
-                            {% csrf_token %}
-
-
-                            <button class="action-btn activate">
-
-                            Activate
-
-                            </button>
-
-
-                        </form>
-
-
-
-
-
-                    {% elif user.status == "PENDING" %}
-
-
-
-                        <a href="{% url 'administrator:change_status' user.id %}">
-
-
-                            <button class="action-btn activate">
-
-                                Activate
-
-                            </button>
-
-
-                        </a>
-
-
-
-                    {% endif %}
-
-
-
-                    </td>
-
-
-
-                </tr>
-
-
-
-                {% empty %}
-
-
-                <tr>
-
-                    <td colspan="5">
-
-                        No Investors Found
-
-                    </td>
-
-
-                </tr>
-
-
-                {% endfor %}
-
-
-
-                </tbody>
-
-
-            </table>
-
-
-
-        </div>
-
-
-
-    </div>
+</div>
 
 
 
 </div>
 
+
+
+
+
+
+
+
+
+<div class="admin-table-card card">
+
+
+
+
+
+<div class="dashboard-header">
+
+
+<h2>
+Investor Management
+</h2>
+
+
+
+<a 
+href="{% url 'administrator:download_report' %}"
+class="action-btn activate download-btn"
+>
+
+Download Excel
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Desktop Table -->
+
+
+<div class="desktop-table">
+
+
+<div class="table-responsive">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+Investor ID
+</th>
+
+
+<th>
+Name
+</th>
+
+
+<th>
+Mobile
+</th>
+
+
+<th>
+Status
+</th>
+
+
+<th>
+Left
+</th>
+
+
+<th>
+Right
+</th>
+
+
+<th>
+Pairs
+</th>
+
+
+<th>
+Chain
+</th>
+
+
+<th>
+Action
+</th>
+
+
+</tr>
+
+</thead>
+
+
+
+
+
+
+<tbody>
+
+
+
+{% for item in investors %}
+
+
+<tr>
+
+
+
+<td>
+{{item.user.investor_id}}
+</td>
+
+
+
+<td>
+{{item.user.full_name}}
+</td>
+
+
+
+<td>
+{{item.user.mobile}}
+</td>
+
+
+
+
+<td>
+
+<span class="status {{item.user.status|lower}}">
+
+{{item.user.status}}
+
+</span>
+
+</td>
+
+
+
+
+<td>
+{{item.pair.left}}
+</td>
+
+
+
+<td>
+{{item.pair.right}}
+</td>
+
+
+
+
+<td>
+
+<strong>
+{{item.pair.pairs}}
+</strong>
+
+</td>
+
+
+
+
+<td>
+
+
+<a
+class="action-btn"
+href="{% url 'administrator:investor_chain' item.user.id %}"
+>
+
+Chain
+
+</a>
+
+
+</td>
+
+
+
+
+<td>
+
+
+
+<form method="POST"
+action="{% url 'administrator:change_status' item.user.id %}">
+
+
+{% csrf_token %}
+
+
+
+{% if item.user.status == "ACTIVE" %}
+
+
+<button 
+class="action-btn deactivate">
+
+Deactivate
+
+</button>
+
+
+
+{% else %}
+
+
+<button 
+class="action-btn activate">
+
+Activate
+
+</button>
+
+
+
+{% endif %}
+
+
+
+</form>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+{% empty %}
+
+
+
+<tr>
+
+<td colspan="9">
+
+No Investors Found
+
+</td>
+
+</tr>
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+
+</table>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Mobile Cards -->
+
+
+<div class="mobile-investor-list">
+
+
+
+{% for item in investors %}
+
+
+
+<div class="investor-mobile-card">
+
+
+
+<div class="mobile-row">
+
+<span>
+Investor ID
+</span>
+
+<strong>
+{{item.user.investor_id}}
+</strong>
+
+</div>
+
+
+
+
+
+<div class="mobile-row">
+
+<span>
+Name
+</span>
+
+<strong>
+{{item.user.full_name}}
+</strong>
+
+</div>
+
+
+
+
+
+<div class="mobile-row">
+
+<span>
+Mobile
+</span>
+
+<strong>
+{{item.user.mobile}}
+</strong>
+
+</div>
+
+
+
+
+
+<div class="mobile-row">
+
+<span>
+Status
+</span>
+
+
+<span class="status {{item.user.status|lower}}">
+
+{{item.user.status}}
+
+</span>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="mobile-network">
+
+
+
+<div>
+
+<h4>
+Left
+</h4>
+
+<p>
+{{item.pair.left}}
+</p>
+
+</div>
+
+
+
+
+<div>
+
+<h4>
+Right
+</h4>
+
+<p>
+{{item.pair.right}}
+</p>
+
+</div>
+
+
+
+
+<div>
+
+<h4>
+Pairs
+</h4>
+
+<p>
+{{item.pair.pairs}}
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="mobile-actions">
+
+
+<a
+class="action-btn"
+href="{% url 'administrator:investor_chain' item.user.id %}"
+>
+
+View Chain
+
+</a>
+
+
+
+
+
+<form method="POST"
+action="{% url 'administrator:change_status' item.user.id %}">
+
+
+{% csrf_token %}
+
+
+
+{% if item.user.status == "ACTIVE" %}
+
+
+<button class="action-btn deactivate">
+
+Deactivate
+
+</button>
+
+
+
+{% else %}
+
+
+
+<button class="action-btn activate">
+
+Activate
+
+</button>
+
+
+{% endif %}
+
+
+
+</form>
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
 
 
 {% endblock %}

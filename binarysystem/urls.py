@@ -9,6 +9,8 @@ from django.urls import (
     include
 )
 
+from accounts.views import home,contact,projects,about,terms,gallery
+
 from django.conf import settings
 
 from django.conf.urls.static import static
@@ -40,6 +42,44 @@ urlpatterns = [
             'accounts.urls'
         )
 
+    ),
+    path(
+        "",
+        home,
+        name="home"
+    ),
+
+
+    path(
+        "about/",
+        about,
+        name="about"
+    ),
+
+
+    path(
+        "projects/",
+        projects,
+        name="projects"
+    ),
+
+
+    path(
+        "gallery/",
+        gallery,
+        name="gallery"
+    ),
+
+
+    path(
+        "contact/",
+        contact,
+        name="contact"
+    ),
+    path(
+        "terms/",
+        terms,
+        name="terms"
     ),
 
 
