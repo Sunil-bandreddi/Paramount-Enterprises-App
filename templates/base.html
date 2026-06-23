@@ -55,76 +55,89 @@
 
     <a href="/" class="brand">
 
-
-        <img src="{% static 'images/logo.png' %}" class="logo-image" alt="invalid" >
-
+        <img src="{% static 'images/logo.png' %}" class="logo-image" alt="Paramount Logo">
 
         <span>
-
-            <strong>
-                Paramount
-            </strong>
-
-
-            <small>
-                Enterprises
-            </small>
-
-
+            <strong>Paramount</strong>
+            <small>Enterprises</small>
         </span>
 
-
     </a>
 
 
 
+    <!-- Mobile Menu Button -->
 
+    <button class="mobile-menu-btn" id="menuToggle">
 
-    <nav class="site-nav">
+        ☰
 
-
-    <a href="{% url 'home' %}">
-
-    Home
-
-    </a>
-
-
-
-    <a href="{% url 'about' %}">
-
-    About
-
-    </a>
+    </button>
 
 
 
 
-    <a href="{% url 'projects' %}">
-
-    Projects
-
-    </a>
+    <nav class="site-nav" id="siteNav">
 
 
+        <a href="{% url 'home' %}">
+            Home
+        </a>
 
 
-
-    <a href="{% url 'gallery' %}">
-
-    Gallery
-
-    </a>
+        <a href="{% url 'about' %}">
+            About
+        </a>
 
 
+        <a href="{% url 'projects' %}">
+            Projects
+        </a>
 
 
+        <a href="{% url 'gallery' %}">
+            Gallery
+        </a>
 
-    <a href="{% url 'contact' %}">
 
-    Contact
+        <a href="{% url 'contact' %}">
+            Contact
+        </a>
 
-    </a>
+
+        <div class="mobile-actions">
+
+
+        {% if request.user.is_authenticated %}
+
+
+            <a href="/dashboard/">
+                Dashboard
+            </a>
+
+
+            <a href="/logout/" class="button-link">
+                Logout
+            </a>
+
+
+        {% else %}
+
+
+            <a href="/login/">
+                Login
+            </a>
+
+
+            <a href="/register/" class="button-link">
+                Register
+            </a>
+
+
+        {% endif %}
+
+
+        </div>
 
 
 
@@ -145,13 +158,8 @@
             </a>
 
 
-            <a 
-                href="/logout/"
-                class="button-link"
-            >
-
+            <a href="/logout/" class="button-link">
                 Logout
-
             </a>
 
 
@@ -160,20 +168,13 @@
 
 
             <a href="/login/">
-
                 Login
-
             </a>
 
 
 
-            <a 
-                href="/register/"
-                class="button-link"
-            >
-
+            <a href="/register/" class="button-link">
                 Register
-
             </a>
 
 
@@ -388,6 +389,33 @@
 
 
 <script src="{% static 'js/main.js' %}"></script>
+
+
+<script>
+
+
+const menuBtn = document.getElementById("menuToggle");
+
+const nav = document.getElementById("siteNav");
+
+
+menuBtn.addEventListener("click",()=>{
+
+
+    nav.classList.toggle("active");
+
+
+    menuBtn.innerHTML =
+    nav.classList.contains("active")
+    ? "✕"
+    : "☰";
+
+
+});
+
+
+
+</script>
 
 
 {% block extra_js %}

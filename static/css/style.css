@@ -487,19 +487,18 @@ p {
 /* =====================================================
    HERO SECTION
 ===================================================== */
+/* =====================================================
+   HERO SECTION FIX
+===================================================== */
 
 
 .hero {
 
     position:relative;
-
-    min-height:85vh;
-
+    width:100%;
+    height:75vh;
+    min-height:500px;
     overflow:hidden;
-
-    display:flex;
-
-    align-items:center;
 
 }
 
@@ -508,9 +507,9 @@ p {
 .hero-slider {
 
     position:absolute;
-
     inset:0;
-
+    width:100%;
+    height:100%;
     z-index:0;
 
 }
@@ -521,13 +520,15 @@ p {
 
     position:absolute;
 
-    inset:0;
+    top:0;
+    left:0;
 
     width:100%;
-
     height:100%;
 
     object-fit:cover;
+
+    object-position:center;
 
     opacity:0;
 
@@ -554,7 +555,7 @@ p {
     background:
     linear-gradient(
         90deg,
-        rgba(0,0,0,.55),
+        rgba(0,0,0,.45),
         rgba(0,0,0,.15)
     );
 
@@ -570,11 +571,15 @@ p {
 
     z-index:2;
 
-    width:min(100% - 48px,1200px);
+    height:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    width:min(100% - 60px,1200px);
 
     margin:auto;
-
-    color:white;
 
 }
 
@@ -582,35 +587,21 @@ p {
 
 .hero-content h1 {
 
-    max-width:650px;
-
-    font-size:clamp(42px,6vw,70px);
-
     color:white;
 
-    line-height:1.15;
+    font-size:clamp(35px,6vw,70px);
 
 }
 
 
-
-.hero-content span {
-
-    color:#f7c948;
-
-}
 
 
 
 .hero-content p {
 
-    margin-top:20px;
+    color:white;
 
     max-width:600px;
-
-    color:rgba(255,255,255,.9);
-
-    font-size:18px;
 
 }
 
@@ -622,20 +613,93 @@ p {
 
     display:inline-flex;
 
-    margin-top:35px;
+    margin-top:30px;
 
     padding:14px 32px;
 
-    background:var(--gold-600);
+    background:#C9A227;
 
     color:white;
 
     border-radius:8px;
 
-    font-weight:700;
+}
+
+
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+
+.hero{
+
+    height:auto;
+    min-height:0;
+    padding:0;
+    margin:0;
 
 }
 
+
+
+.hero-slider{
+
+    position:relative;
+
+    width:100%;
+
+    height:auto;
+
+}
+
+
+
+.hero-slider img{
+
+    position:relative;
+
+    width:100%;
+
+    height:auto;
+
+    display:none;
+
+    object-fit:contain;
+
+}
+
+
+
+.hero-slider img.active{
+
+    display:block;
+
+}
+
+
+
+.hero-overlay{
+
+    display:none;
+
+}
+
+
+
+.hero-content{
+
+    display:none;
+
+}
+
+
+
+}
 
 
 
@@ -3309,15 +3373,6 @@ tr:hover {
 
     /* HERO */
 
-
-    .hero {
-
-        min-height:75vh;
-
-    }
-
-
-
     .hero-content h1 {
 
         font-size:40px;
@@ -4690,4 +4745,211 @@ grid-template-columns:1fr;
 
 .logo-image{
     width: 50px;
+}
+/* ==========================================
+   RESPONSIVE NAVBAR FIX
+========================================== */
+
+
+.site-header{
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:25px;
+
+}
+
+
+
+.mobile-menu-btn{
+
+    display:none;
+
+    border:none;
+    background:transparent;
+    font-size:30px;
+    cursor:pointer;
+    color:var(--maroon);
+
+}
+
+
+
+.mobile-actions{
+
+    display:none;
+
+}
+
+
+
+
+
+@media(max-width:900px){
+
+
+
+.site-header{
+
+    position:sticky;
+    top:0;
+    background:#fff;
+    z-index:999;
+
+}
+
+
+
+.mobile-menu-btn{
+
+    display:block;
+
+    order:3;
+
+}
+
+
+
+
+.site-nav{
+
+
+    position:absolute;
+
+    top:78px;
+
+    left:0;
+
+    width:100%;
+
+    background:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:0;
+
+    padding:20px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+
+    transform:translateY(-120%);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s ease;
+
+
+}
+
+
+
+.site-nav.active{
+
+    transform:translateY(0);
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+
+
+
+.site-nav a{
+
+    padding:14px 10px;
+
+    border-bottom:1px solid #eee;
+
+    font-weight:600;
+
+}
+
+
+
+
+
+.nav-actions{
+
+    display:none;
+
+}
+
+
+
+
+.mobile-actions{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-top:15px;
+
+}
+
+
+
+.mobile-actions .button-link{
+
+    width:100%;
+
+}
+
+
+
+.brand strong{
+
+    font-size:16px;
+
+}
+
+
+
+.logo-image{
+
+    width:42px;
+
+}
+
+
+
+}
+
+
+
+
+@media(max-width:480px){
+
+
+.site-header{
+
+    padding:10px 14px;
+
+}
+
+
+.brand span{
+
+    display:none;
+
+}
+
+
+
+.mobile-menu-btn{
+
+    font-size:26px;
+
+}
+
+
 }
