@@ -26,14 +26,14 @@ SECRET_KEY = os.environ.get(
 )
 
 
-DEBUG = True
+DEBUG = False
 
 
-ALLOWED_HOSTS = os.environ.get(
-    "DJANGO_ALLOWED_HOSTS",
-    "localhost,127.0.0.1,testserver",
-).split(",")
-
+ALLOWED_HOSTS = [
+    "bkgparamount.com",
+    "www.bkgparamount.com",
+    "148.135.136.60"
+]
 
 
 # -------------------------------------------------
@@ -94,11 +94,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 
    
 
 ]
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # -------------------------------------------------
@@ -313,6 +314,7 @@ STATICFILES_DIRS = [
 ]
 
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # -------------------------------------------------
 # MEDIA FILES
@@ -359,3 +361,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Referral bonus per direct referral shown in weekly dashboard cards.
 REFERRAL_BONUS_AMOUNT = int(os.environ.get("REFERRAL_BONUS_AMOUNT", "500"))
+
+
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
+
+
