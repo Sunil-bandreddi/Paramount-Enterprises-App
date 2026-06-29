@@ -24,8 +24,141 @@ Investor Management & Binary Network Monitoring
 </div>
 
 
+<div class="admin-card">
 
 
+<h2>
+Customer Enquiries
+</h2>
+
+
+
+<div class="table-container">
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+<th>
+Name
+</th>
+
+
+<th>
+Email
+</th>
+
+
+<th>
+Phone
+</th>
+
+
+<th>
+Message
+</th>
+
+
+<th>
+Date
+</th>
+
+
+</tr>
+
+
+</thead>
+
+
+
+<tbody>
+
+
+
+{% for enquiry in enquiries %}
+
+
+
+<tr>
+
+
+<td>
+
+{{ enquiry.name }}
+
+</td>
+
+
+
+<td>
+
+{{ enquiry.email }}
+
+</td>
+
+
+
+<td>
+
+{{ enquiry.phone }}
+
+</td>
+
+
+
+<td>
+
+{{ enquiry.message }}
+
+</td>
+
+
+
+<td>
+
+{{ enquiry.created_at|date:"d M Y H:i" }}
+
+</td>
+
+
+</tr>
+
+
+
+{% empty %}
+
+
+
+<tr>
+
+<td colspan="5">
+
+No customer enquiries available
+
+</td>
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</div>
 
 
 
@@ -35,7 +168,6 @@ Investor Management & Binary Network Monitoring
 <div class="stats-container">
 
 
-
 <div class="stat-card">
 
 <h3>
@@ -43,11 +175,10 @@ Total Users
 </h3>
 
 <h2>
-{{total_users}}
+{{ total_users }}
 </h2>
 
 </div>
-
 
 
 
@@ -59,11 +190,10 @@ Active Users
 </h3>
 
 <h2>
-{{active_users}}
+{{ active_users }}
 </h2>
 
 </div>
-
 
 
 
@@ -75,11 +205,10 @@ Pending Users
 </h3>
 
 <h2>
-{{pending_users}}
+{{ pending_users }}
 </h2>
 
 </div>
-
 
 
 
@@ -91,11 +220,10 @@ Inactive Users
 </h3>
 
 <h2>
-{{inactive_users}}
+{{ inactive_users }}
 </h2>
 
 </div>
-
 
 
 </div>
@@ -114,6 +242,7 @@ Inactive Users
 
 
 
+
 <div class="dashboard-header">
 
 
@@ -123,12 +252,41 @@ Investor Management
 
 
 
-<a 
-href="{% url 'administrator:download_report' %}"
-class="action-btn activate download-btn"
->
 
-Download Excel
+
+<div class="report-dropdown">
+
+
+<button class="action-btn activate download-btn">
+
+Download Report ▼
+
+</button>
+
+
+
+<div class="report-menu">
+
+
+<a href="{% url 'administrator:download_report' %}?type=daily">
+
+Daily Report
+
+</a>
+
+
+
+<a href="{% url 'administrator:download_report' %}?type=weekly">
+
+Weekly Report
+
+</a>
+
+
+
+<a href="{% url 'administrator:download_report' %}?type=overall">
+
+Overall Report
 
 </a>
 
@@ -136,6 +294,13 @@ Download Excel
 
 </div>
 
+
+</div>
+
+
+
+
+</div>
 
 
 
@@ -158,7 +323,9 @@ Download Excel
 
 <thead>
 
+
 <tr>
+
 
 <th>
 Investor ID
@@ -207,8 +374,8 @@ Action
 
 </tr>
 
-</thead>
 
+</thead>
 
 
 
@@ -221,50 +388,67 @@ Action
 {% for item in investors %}
 
 
+
 <tr>
 
 
 
-<td>
-{{item.user.investor_id}}
-</td>
-
-
 
 <td>
-{{item.user.full_name}}
-</td>
 
+{{ item.user.investor_id }}
 
-
-<td>
-{{item.user.mobile}}
 </td>
 
 
 
 
 <td>
+
+{{ item.user.full_name }}
+
+</td>
+
+
+
+
+<td>
+
+{{ item.user.mobile }}
+
+</td>
+
+
+
+
+<td>
+
 
 <span class="status {{item.user.status|lower}}">
 
-{{item.user.status}}
+{{ item.user.status }}
 
 </span>
 
+
 </td>
 
 
 
 
 <td>
-{{item.pair.left}}
+
+{{ item.pair.left }}
+
 </td>
 
 
 
+
 <td>
-{{item.pair.right}}
+
+{{ item.pair.right }}
+
 </td>
 
 
@@ -273,8 +457,11 @@ Action
 <td>
 
 <strong>
-{{item.pair.pairs}}
+
+{{ item.pair.pairs }}
+
 </strong>
+
 
 </td>
 
@@ -288,9 +475,7 @@ Action
 class="action-btn"
 href="{% url 'administrator:investor_chain' item.user.id %}"
 >
-
-Chain
-
+View Level
 </a>
 
 
@@ -302,9 +487,64 @@ Chain
 <td>
 
 
+<a
 
-<form method="POST"
-action="{% url 'administrator:change_status' item.user.id %}">
+class="action-btn activate"
+
+href="{% url 'administrator:edit_investor' item.user.id %}"
+
+>
+
+Edit
+
+</a>
+
+
+
+<form
+
+method="POST"
+
+action="{% url 'administrator:delete_investor' item.user.id %}"
+
+style="display:inline;"
+
+>
+
+
+{% csrf_token %}
+
+
+
+<button
+
+class="action-btn deactivate"
+
+onclick="return confirm('Are you sure you want to delete this investor?')"
+
+>
+
+Delete
+
+</button>
+
+
+
+</form>
+
+
+<!-- STATUS CHANGE -->
+
+
+<form
+
+method="POST"
+
+action="{% url 'administrator:change_status' item.user.id %}"
+
+style="display:inline;"
+
+>
 
 
 {% csrf_token %}
@@ -314,8 +554,13 @@ action="{% url 'administrator:change_status' item.user.id %}">
 {% if item.user.status == "ACTIVE" %}
 
 
-<button 
-class="action-btn deactivate">
+<button
+
+class="action-btn deactivate"
+
+type="submit"
+
+>
 
 Deactivate
 
@@ -326,8 +571,13 @@ Deactivate
 {% else %}
 
 
-<button 
-class="action-btn activate">
+<button
+
+class="action-btn activate"
+
+type="submit"
+
+>
 
 Activate
 
@@ -348,6 +598,8 @@ Activate
 
 
 </tr>
+
+
 
 
 
@@ -366,6 +618,7 @@ No Investors Found
 </tr>
 
 
+
 {% endfor %}
 
 
@@ -373,11 +626,9 @@ No Investors Found
 </tbody>
 
 
-
 </table>
 
 
-
 </div>
 
 
@@ -391,7 +642,7 @@ No Investors Found
 
 
 
-<!-- Mobile Cards -->
+<!-- MOBILE INVESTOR LIST -->
 
 
 <div class="mobile-investor-list">
@@ -406,15 +657,25 @@ No Investors Found
 
 
 
+
+
+
 <div class="mobile-row">
 
+
 <span>
+
 Investor ID
+
 </span>
 
+
 <strong>
-{{item.user.investor_id}}
+
+{{ item.user.investor_id }}
+
 </strong>
+
 
 </div>
 
@@ -422,15 +683,24 @@ Investor ID
 
 
 
+
+
 <div class="mobile-row">
 
+
 <span>
+
 Name
+
 </span>
 
+
 <strong>
-{{item.user.full_name}}
+
+{{ item.user.full_name }}
+
 </strong>
+
 
 </div>
 
@@ -438,15 +708,24 @@ Name
 
 
 
+
+
 <div class="mobile-row">
 
+
 <span>
+
 Mobile
+
 </span>
 
+
 <strong>
-{{item.user.mobile}}
+
+{{ item.user.mobile }}
+
 </strong>
+
 
 </div>
 
@@ -454,21 +733,31 @@ Mobile
 
 
 
+
+
 <div class="mobile-row">
 
+
 <span>
+
 Status
+
 </span>
+
 
 
 <span class="status {{item.user.status|lower}}">
 
-{{item.user.status}}
+
+{{ item.user.status }}
+
 
 </span>
 
 
 </div>
+
+
 
 
 
@@ -482,43 +771,66 @@ Status
 
 <div>
 
+
 <h4>
+
 Left
+
 </h4>
 
+
 <p>
-{{item.pair.left}}
+
+{{ item.pair.left }}
+
 </p>
+
 
 </div>
 
 
 
 
+
 <div>
 
+
 <h4>
+
 Right
+
 </h4>
 
+
 <p>
-{{item.pair.right}}
+
+{{ item.pair.right }}
+
 </p>
+
 
 </div>
 
 
 
 
+
 <div>
 
+
 <h4>
+
 Pairs
+
 </h4>
 
+
 <p>
-{{item.pair.pairs}}
+
+{{ item.pair.pairs }}
+
 </p>
+
 
 </div>
 
@@ -537,12 +849,29 @@ Pairs
 <div class="mobile-actions">
 
 
+
+
+
 <a
 class="action-btn"
 href="{% url 'administrator:investor_chain' item.user.id %}"
 >
+Level
+</a>
 
-View Chain
+
+
+
+
+<a
+
+class="action-btn activate"
+
+href="{% url 'administrator:edit_investor' item.user.id %}"
+
+>
+
+Edit
 
 </a>
 
@@ -550,18 +879,66 @@ View Chain
 
 
 
-<form method="POST"
-action="{% url 'administrator:change_status' item.user.id %}">
+
+
+<form
+
+method="POST"
+
+action="{% url 'administrator:delete_investor' item.user.id %}"
+
+>
 
 
 {% csrf_token %}
 
 
 
+<button
+
+class="action-btn deactivate"
+
+onclick="return confirm('Are you sure you want to delete this investor?')"
+
+>
+
+Delete
+
+</button>
+
+
+</form>
+
+
+
+
+
+
+
+<form
+
+method="POST"
+
+action="{% url 'administrator:change_status' item.user.id %}"
+
+>
+
+
+{% csrf_token %}
+
+
+
+
+
 {% if item.user.status == "ACTIVE" %}
 
 
-<button class="action-btn deactivate">
+
+<button
+
+class="action-btn deactivate"
+
+>
 
 Deactivate
 
@@ -569,15 +946,21 @@ Deactivate
 
 
 
+
 {% else %}
 
 
 
-<button class="action-btn activate">
+<button
+
+class="action-btn activate"
+
+>
 
 Activate
 
 </button>
+
 
 
 {% endif %}
@@ -588,7 +971,11 @@ Activate
 
 
 
+
+
 </div>
+
+
 
 
 
@@ -609,13 +996,257 @@ Activate
 
 
 
+
+
+
 </div>
 
 
 
 
 
+
 </div>
+
+
+
+
+
+
+
+<style>
+
+
+.report-dropdown{
+
+position:relative;
+
+display:inline-block;
+
+}
+
+
+
+.report-menu{
+
+
+display:none;
+
+position:absolute;
+
+right:0;
+
+top:45px;
+
+background:white;
+
+min-width:200px;
+
+border-radius:10px;
+
+box-shadow:0 8px 20px rgba(0,0,0,0.15);
+
+overflow:hidden;
+
+z-index:999;
+
+
+}
+
+
+
+.report-menu a{
+
+
+display:block;
+
+padding:12px 15px;
+
+text-decoration:none;
+
+color:#222;
+
+
+}
+
+
+
+.report-menu a:hover{
+
+
+background:#f5f5f5;
+
+
+}
+
+
+
+.report-dropdown:hover .report-menu{
+
+
+display:block;
+
+
+}
+
+
+
+
+
+
+.dashboard-header{
+
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+flex-wrap:wrap;
+
+gap:15px;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.action-btn{
+
+
+border:none;
+
+cursor:pointer;
+
+padding:8px 14px;
+
+border-radius:8px;
+
+font-size:13px;
+
+text-decoration:none;
+
+display:inline-block;
+
+
+}
+
+
+.level-container{
+
+padding:20px;
+
+}
+
+
+
+.level-card{
+
+
+background:white;
+
+border-radius:15px;
+
+padding:20px;
+
+margin-bottom:20px;
+
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+
+}
+
+
+
+
+.level-header{
+
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+background:#f5f5f5;
+
+padding:10px 15px;
+
+border-radius:10px;
+
+
+}
+
+
+
+.level-header h3{
+
+
+margin:0;
+
+}
+
+
+
+.position{
+
+
+font-size:13px;
+
+font-weight:bold;
+
+}
+
+
+
+.investor-details{
+
+
+padding:15px;
+
+}
+
+
+
+.children-container{
+
+
+margin-left:40px;
+
+border-left:3px solid #ddd;
+
+padding-left:20px;
+
+
+}
+
+
+
+.child-node{
+
+
+margin-top:15px;
+
+
+}
+
+
+</style>
+
+
+
 
 
 {% endblock %}

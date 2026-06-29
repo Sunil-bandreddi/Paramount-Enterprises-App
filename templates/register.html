@@ -1,174 +1,3005 @@
 {% extends 'base.html' %}
 {% block title %}Register | Paramount Enterprises{% endblock %}
 {% load static %}
+
 {% block content %}
+
 <section class="page-shell">
-    <div class="form-card">
-        <div class="form-heading">
-            <!-- <img src="{% static 'images/logo.png' %}" class="logo-image" alt="Company Logo" style="margin-left: 50%;"> -->
-            <h1>Join ID: Free Registration</h1>
-            <p>Complete the Registration to book your plot for 10k (200 Yards) for free and more excited benefits.</p>
-        </div>
 
-        {% if form.non_field_errors %}
-            <div class="error-box">{{ form.non_field_errors }}</div>
-        {% endif %}
+<div class="form-card">
 
-        {% if is_first_registration %}
-            <div class="error-box">
-                This will be the first account and will be created as the active admin sponsor.
-            </div>
-        {% endif %}
 
-        <form method="POST" enctype="multipart/form-data" novalidate>
-            {% csrf_token %}
+<div class="form-heading">
 
-            <div class="section-title">Personal User Information</div>
-            <div class="form-grid">
-                <div class="field">
-                    <label for="id_full_name">Full Name *</label>
-                    <input id="id_full_name" name="full_name" type="text" placeholder="Enter full name" value="{{ form.full_name.value|default_if_none:'' }}" required>
-                    {% if form.full_name.errors %}<div class="field-error">{{ form.full_name.errors.0 }}</div>{% endif %}
-                </div>
+<h1>
+Join ID: Free Registration
+</h1>
 
-                <div class="field">
-                    <label for="id_dob">Date Of Birth *</label>
-                    <input id="id_dob" name="dob" type="date" value="{{ form.dob.value|default_if_none:'' }}" required>
-                    {% if form.dob.errors %}<div class="field-error">{{ form.dob.errors.0 }}</div>{% endif %}
-                </div>
+<p>
+Complete the Registration to book your plot for 10k (200 Yards) for free and more excited benefits.
+</p>
 
-                <div class="field">
-                    <label for="id_mobile">Mobile No *</label>
-                    <input id="id_mobile" name="mobile" type="text" inputmode="numeric" maxlength="10" placeholder="Enter mobile no" value="{{ form.mobile.value|default_if_none:'' }}" required>
-                    {% if form.mobile.errors %}<div class="field-error">{{ form.mobile.errors.0 }}</div>{% endif %}
-                </div>
+</div>
 
-                <div class="field">
-                    <label for="id_email">Email ID (Optional)</label>
-                    <input id="id_email" name="email" type="email" placeholder="name@example.com" value="{{ form.email.value|default_if_none:'' }}">
-                    {% if form.email.errors %}<div class="field-error">{{ form.email.errors.0 }}</div>{% endif %}
-                </div>
 
-                {% if not is_first_registration %}
-                    <div class="field">
-                        <label for="id_sponsor">Sponsor ID *</label>
-                        <input id="id_sponsor" name="sponsor" type="text" placeholder="Enter sponsor id" value="{{ form.sponsor.value|default_if_none:'' }}" required>
-                        {% if form.sponsor.errors %}<div class="field-error">{{ form.sponsor.errors.0 }}</div>{% endif %}
-                    </div>
 
-                    <div class="field">
-                        <label>Placement Left : Right *</label>
-                        <div class="choice-grid">
-                            <label class="radio-option" for="position_left">
-                                <input id="position_left" name="position" type="radio" value="LEFT" {% if form.position.value == "LEFT" or not form.position.value %}checked{% endif %}>
-                                Left
-                            </label>
-                            <label class="radio-option" for="position_right">
-                                <input id="position_right" name="position" type="radio" value="RIGHT" {% if form.position.value == "RIGHT" %}checked{% endif %}>
-                                Right
-                            </label>
-                        </div>
-                        {% if form.position.errors %}<div class="field-error">{{ form.position.errors.0 }}</div>{% endif %}
-                    </div>
-                {% endif %}
-            </div>
+{% if form.non_field_errors %}
 
-            <div class="section-title">Address Details</div>
-            <div class="form-grid three-grid">
-                <div class="field full">
-                    <label for="id_address">Address *</label>
-                    <textarea id="id_address" name="address" placeholder="Enter house, street, area address" required>{{ form.address.value|default_if_none:'' }}</textarea>
-                    {% if form.address.errors %}<div class="field-error">{{ form.address.errors.0 }}</div>{% endif %}
-                </div>
+<div class="error-box">
+{{ form.non_field_errors }}
+</div>
 
-                <div class="field">
-                    <label for="id_city">City *</label>
-                    <input id="id_city" name="city" type="text" placeholder="Enter city" value="{{ form.city.value|default_if_none:'' }}" required>
-                    {% if form.city.errors %}<div class="field-error">{{ form.city.errors.0 }}</div>{% endif %}
-                </div>
+{% endif %}
 
-                <div class="field">
-                    <label for="id_state">State *</label>
-                    <input id="id_state" name="state" type="text" placeholder="Enter state" value="{{ form.state.value|default_if_none:'' }}" required>
-                    {% if form.state.errors %}<div class="field-error">{{ form.state.errors.0 }}</div>{% endif %}
-                </div>
 
-                <div class="field">
-                    <label for="id_aadhar">Aadhar No *</label>
-                    <input id="id_aadhar" name="aadhar" type="text" inputmode="numeric" maxlength="12" placeholder="12-digit Aadhar number" value="{{ form.aadhar.value|default_if_none:'' }}" required>
-                    {% if form.aadhar.errors %}<div class="field-error">{{ form.aadhar.errors.0 }}</div>{% endif %}
-                </div>
-            </div>
 
-            <div class="section-title">KYC &amp; Banking Information</div>
-            <div class="form-grid">
-                <div class="field">
-                    <label for="id_pan">PAN Card No </label>
-                    <input id="id_pan" name="pan" type="text" maxlength="10" placeholder="10-digit PAN number" value="{{ form.pan.value|default_if_none:'' }}">
-                    {% if form.pan.errors %}<div class="field-error">{{ form.pan.errors.0 }}</div>{% endif %}
-                </div>
+{% if is_first_registration %}
 
-                <div class="field">
-                    <label for="id_account_no">Account No *</label>
-                    <input id="id_account_no" name="account_no" type="text" placeholder="Bank account number" value="{{ form.account_no.value|default_if_none:'' }}" required>
-                    {% if form.account_no.errors %}<div class="field-error">{{ form.account_no.errors.0 }}</div>{% endif %}
-                </div>
+<div class="error-box">
 
-                <div class="field">
-                    <label for="id_bank_name">Bank Name *</label>
-                    <input id="id_bank_name" name="bank_name" type="text" placeholder="Bank name" value="{{ form.bank_name.value|default_if_none:'' }}" required>
-                    {% if form.bank_name.errors %}<div class="field-error">{{ form.bank_name.errors.0 }}</div>{% endif %}
-                </div>
+This will be the first account and will be created as the active admin sponsor.
 
-                <div class="field">
-                    <label for="id_branch">Branch *</label>
-                    <input id="id_branch" name="branch" type="text" placeholder="Branch name" value="{{ form.branch.value|default_if_none:'' }}" required>
-                    {% if form.branch.errors %}<div class="field-error">{{ form.branch.errors.0 }}</div>{% endif %}
-                </div>
+</div>
 
-                <div class="field full">
-                    <label for="id_ifsc_code">IFSC Code *</label>
-                    <input id="id_ifsc_code" name="ifsc_code" type="text" placeholder="IFSC code" value="{{ form.ifsc_code.value|default_if_none:'' }}" required>
-                    {% if form.ifsc_code.errors %}<div class="field-error">{{ form.ifsc_code.errors.0 }}</div>{% endif %}
-                </div>
-            </div>
+{% endif %}
 
-            <div class="section-title">Nominee &amp; Security Information</div>
-            <div class="form-grid">
-                <div class="field">
-                    <label for="id_nominee">Nominee *</label>
-                    <input id="id_nominee" name="nominee" type="text" placeholder="Nominee full name" value="{{ form.nominee.value|default_if_none:'' }}" required>
-                    {% if form.nominee.errors %}<div class="field-error">{{ form.nominee.errors.0 }}</div>{% endif %}
-                </div>
 
-                <div class="field">
-                    <label for="id_nominee_relation">Relationship *</label>
-                    <input id="id_nominee_relation" name="nominee_relation" type="text" placeholder="e.g. Spouse, Son, Father" value="{{ form.nominee_relation.value|default_if_none:'' }}" required>
-                    {% if form.nominee_relation.errors %}<div class="field-error">{{ form.nominee_relation.errors.0 }}</div>{% endif %}
-                </div>
 
-                <div class="field">
-                    <label for="id_password">Password *</label>
-                    <input id="id_password" name="password" type="password" placeholder="Password" required>
-                    {% if form.password.errors %}<div class="field-error">{{ form.password.errors.0 }}</div>{% endif %}
-                </div>
+<form method="POST" enctype="multipart/form-data" novalidate>
 
-                <div class="field">
-                    <label for="id_confirm_password">Confirm Password *</label>
-                    <input id="id_confirm_password" name="confirm_password" type="password" placeholder="Confirm password" required>
-                    {% if form.confirm_password.errors %}<div class="field-error">{{ form.confirm_password.errors.0 }}</div>{% endif %}
-                </div>
-            </div>
+{% csrf_token %}
 
-            <label class="check-row" for="id_declaration">
-                <input id="id_declaration" name="declaration" type="checkbox" required {% if form.declaration.value %}checked{% endif %}>
-                I certify that all details provided are correct and match my official registration documents.
-            </label>
-            {% if form.declaration.errors %}<div class="field-error">{{ form.declaration.errors.0 }}</div>{% endif %}
 
-            <button class="primary-button" type="submit">Complete Registration</button>
-            <div class="form-link">Already a member? <a href="/login/">Sign in</a></div>
-        </form>
-    </div>
+
+<div class="section-title">
+Personal User Information
+</div>
+
+
+
+<div class="form-grid">
+
+
+
+<div class="field">
+
+<label for="id_full_name">
+Full Name *
+</label>
+
+
+<input 
+id="id_full_name"
+name="full_name"
+type="text"
+placeholder="Enter full name"
+value="{{ form.full_name.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.full_name.errors %}
+<div class="field-error">
+{{ form.full_name.errors.0 }}
+</div>
+{% endif %}
+
+
+</div>
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_dob">
+Date Of Birth *
+</label>
+
+
+<input 
+id="id_dob"
+name="dob"
+type="date"
+value="{{ form.dob.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.dob.errors %}
+
+<div class="field-error">
+{{ form.dob.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_mobile">
+Mobile No *
+</label>
+
+
+<input 
+id="id_mobile"
+name="mobile"
+type="text"
+inputmode="numeric"
+maxlength="10"
+placeholder="Enter mobile no"
+value="{{ form.mobile.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.mobile.errors %}
+
+<div class="field-error">
+{{ form.mobile.errors.0 }}
+</div>
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_email">
+Email ID (Optional)
+</label>
+
+
+<input 
+id="id_email"
+name="email"
+type="email"
+placeholder="name@example.com"
+value="{{ form.email.value|default_if_none:'' }}"
+>
+
+
+
+{% if form.email.errors %}
+
+<div class="field-error">
+{{ form.email.errors.0 }}
+</div>
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+
+{% if not is_first_registration %}
+
+
+
+<div class="field">
+
+
+<label for="id_sponsor">
+Sponsor ID *
+</label>
+
+
+<input 
+id="id_sponsor"
+name="sponsor"
+type="text"
+placeholder="Enter sponsor id"
+value="{{ form.sponsor.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.sponsor.errors %}
+
+<div class="field-error">
+{{ form.sponsor.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+<div class="field">
+
+
+<label>
+Placement Left : Right *
+</label>
+
+
+<div class="choice-grid">
+
+
+<label class="radio-option" for="position_left">
+
+<input 
+id="position_left"
+name="position"
+type="radio"
+value="LEFT"
+{% if form.position.value == "LEFT" or not form.position.value %}checked{% endif %}
+>
+
+Left
+
+</label>
+
+
+
+
+
+<label class="radio-option" for="position_right">
+
+
+<input 
+id="position_right"
+name="position"
+type="radio"
+value="RIGHT"
+{% if form.position.value == "RIGHT" %}checked{% endif %}
+>
+
+Right
+
+</label>
+
+
+
+</div>
+
+
+
+{% if form.position.errors %}
+
+<div class="field-error">
+
+{{ form.position.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+
+</div>
+
+
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+<div class="section-title">
+
+Address Details
+
+</div>
+
+
+
+<div class="form-grid three-grid">
+
+
+<div class="field full">
+
+
+<label for="id_address">
+
+Address *
+
+</label>
+
+
+<textarea 
+id="id_address"
+name="address"
+placeholder="Enter house, street, area address"
+required
+>{{ form.address.value|default_if_none:'' }}</textarea>
+
+
+
+{% if form.address.errors %}
+
+<div class="field-error">
+
+{{ form.address.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+<div class="field">
+
+
+<label for="id_city">
+
+City *
+
+</label>
+
+
+<input 
+id="id_city"
+name="city"
+type="text"
+placeholder="Enter city"
+value="{{ form.city.value|default_if_none:'' }}"
+required
+>
+
+
+
+{% if form.city.errors %}
+
+<div class="field-error">
+
+{{ form.city.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_state">
+
+State *
+
+</label>
+
+
+<input 
+id="id_state"
+name="state"
+type="text"
+placeholder="Enter state"
+value="{{ form.state.value|default_if_none:'' }}"
+required
+>
+
+
+
+{% if form.state.errors %}
+
+<div class="field-error">
+
+{{ form.state.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+
+</div>
+
+
+
+
+<div class="field">
+
+
+<label for="id_aadhar">
+
+Aadhar No *
+
+</label>
+
+
+<input 
+id="id_aadhar"
+name="aadhar"
+type="text"
+inputmode="numeric"
+maxlength="12"
+placeholder="12-digit Aadhar number"
+value="{{ form.aadhar.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.aadhar.errors %}
+
+<div class="field-error">
+
+{{ form.aadhar.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+
+</div>
+
+
+
+</div>
+
+<div class="section-title">
+KYC &amp; Banking Information
+</div>
+
+
+<div class="form-grid">
+
+
+<div class="field">
+
+<label for="id_pan">
+PAN Card No
+</label>
+
+
+<input 
+id="id_pan"
+name="pan"
+type="text"
+maxlength="10"
+placeholder="10-digit PAN number"
+value="{{ form.pan.value|default_if_none:'' }}"
+>
+
+
+{% if form.pan.errors %}
+
+<div class="field-error">
+{{ form.pan.errors.0 }}
+</div>
+
+{% endif %}
+
+</div>
+
+
+
+
+
+<div class="field">
+
+<label for="id_account_no">
+Account No *
+</label>
+
+
+<input 
+id="id_account_no"
+name="account_no"
+type="text"
+placeholder="Bank account number"
+value="{{ form.account_no.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.account_no.errors %}
+
+<div class="field-error">
+{{ form.account_no.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+<div class="field">
+
+<label for="id_bank_name">
+Bank Name *
+</label>
+
+
+<input 
+id="id_bank_name"
+name="bank_name"
+type="text"
+placeholder="Bank name"
+value="{{ form.bank_name.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.bank_name.errors %}
+
+<div class="field-error">
+{{ form.bank_name.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+<div class="field">
+
+<label for="id_branch">
+Branch *
+</label>
+
+
+<input 
+id="id_branch"
+name="branch"
+type="text"
+placeholder="Branch name"
+value="{{ form.branch.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.branch.errors %}
+
+<div class="field-error">
+{{ form.branch.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+<div class="field full">
+
+<label for="id_ifsc_code">
+IFSC Code *
+</label>
+
+
+<input 
+id="id_ifsc_code"
+name="ifsc_code"
+type="text"
+placeholder="IFSC code"
+value="{{ form.ifsc_code.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.ifsc_code.errors %}
+
+<div class="field-error">
+{{ form.ifsc_code.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="section-title">
+Nominee &amp; Security Information
+</div>
+
+
+
+<div class="form-grid">
+
+
+
+<div class="field">
+
+
+<label for="id_nominee">
+Nominee *
+</label>
+
+
+<input 
+id="id_nominee"
+name="nominee"
+type="text"
+placeholder="Nominee full name"
+value="{{ form.nominee.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.nominee.errors %}
+
+<div class="field-error">
+{{ form.nominee.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_nominee_relation">
+Relationship *
+</label>
+
+
+<input 
+id="id_nominee_relation"
+name="nominee_relation"
+type="text"
+placeholder="e.g. Spouse, Son, Father"
+value="{{ form.nominee_relation.value|default_if_none:'' }}"
+required
+>
+
+
+{% if form.nominee_relation.errors %}
+
+<div class="field-error">
+{{ form.nominee_relation.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_password">
+Password *
+</label>
+
+
+<input 
+id="id_password"
+name="password"
+type="password"
+placeholder="Password"
+required
+>
+
+
+{% if form.password.errors %}
+
+<div class="field-error">
+{{ form.password.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_confirm_password">
+Confirm Password *
+</label>
+
+
+<input 
+id="id_confirm_password"
+name="confirm_password"
+type="password"
+placeholder="Confirm password"
+required
+>
+
+
+{% if form.confirm_password.errors %}
+
+<div class="field-error">
+{{ form.confirm_password.errors.0 }}
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- Declaration Checkbox -->
+
+<label class="check-row" for="id_declaration">
+
+
+<input 
+id="id_declaration"
+name="declaration"
+type="checkbox"
+required
+{% if form.declaration.value %}checked{% endif %}
+>
+
+
+I certify that all details provided are correct and match my official registration documents.
+
+
+<span>
+
+<a href="javascript:void(0)" 
+class="terms-link"
+onclick="openTerms()">
+
+Terms & Conditions
+
+</a>
+
+</span>
+
+
+</label>
+
+
+
+
+{% if form.declaration.errors %}
+
+<div class="field-error">
+
+{{ form.declaration.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+
+
+
+
+<button class="primary-button" type="submit">
+
+Complete Registration
+
+</button>
+
+
+
+<div class="form-link">
+
+Already a member?
+
+<a href="/login/">
+Sign in
+</a>
+
+</div>
+
+
+
+</form>
+
+
+</div>
+
 </section>
+
+
+
+
+
+<!-- ================= TERMS & CONDITIONS POPUP ================= -->
+
+
+<div id="termsModal" class="terms-modal">
+
+
+<div class="terms-content">
+
+
+<button class="close-terms" onclick="closeTerms()">
+
+&times;
+
+</button>
+
+
+
+<h2>
+Terms & Conditions
+</h2>
+
+
+<div class="terms-body">
+
+
+<h2>
+BKG PARAMOUNT ENTERPRISES
+</h2>
+
+
+<h3>
+Core Terms and Conditions
+</h3>
+
+
+<h3>
+Direct Seller E-Contract Agreement
+</h3>
+
+
+<p>
+This legally binding electronic contract governs the relationship between Paramount Enterprises
+(the Company) and the Independent Business Associate (IBA) or the Direct Seller Associate (DSA).
+It complies with the Indian Contract Act, 1872, the Consumer Protection Act, 2019, and the
+Consumer Protection (Direct Selling) Rules, 2021.
+</p>
+
+
+
+<h4>
+Data Privacy & Compliance
+</h4>
+
+
+<ul>
+
+<li>
+Personal and sensitive digital information is strictly protected under the Information Technology Act,
+2000, and the Direct Selling Rules, 2021.
+</li>
+
+
+<li>
+Zero Third-Party Sharing: Sensitive personal records, financial credentials, and digital identities
+will never be leased, sold, or shared with external marketers.
+</li>
+
+
+<li>
+Statutory Obligation: The Company must legally share an IBA identity, contact number, and address
+with a consumer upon written request to resolve purchase disputes.
+</li>
+
+
+<li>
+Exclusive Jurisdiction: Any legal claims, disputes, or contract interpretations fall solely under the
+territorial jurisdiction of the courts where the Company's registered office resides.
+</li>
+
+
+</ul>
+
+
+
+
+<h3>
+Operations and Onboarding Mechanics
+</h3>
+
+
+
+<h4>
+Free Enrolment
+</h4>
+
+
+<p>
+Registration as an Independent Business Agent (IBA) requires zero entry fees.
+One Aadhaar One IBA only.
+</p>
+
+
+
+<h4>
+Eligibility Criteria
+</h4>
+
+
+<p>
+Applicants must be Indian citizens, at least 18 years old, and fully competent under
+the Indian Contract Act, 1872.
+</p>
+
+
+
+<h4>
+Mandatory Documentation
+</h4>
+
+
+<p>
+Verification requires filling out the digital application form and uploading valid PAN and
+Aadhaar Know Your Customer (KYC) documents.
+</p>
+
+
+
+<h4>
+Independent Status
+</h4>
+
+
+<p>
+Members operate as independent commission-based contractors, creating no principal-agent,
+partnership, or employment relationship with the Company.
+</p>
+
+
+
+<h3>
+Prohibitions and IBA Code of Conduct
+</h3>
+
+
+
+<h4>
+No Recruitment Bonuses
+</h4>
+
+
+<p>
+Compensation is calculated strictly from physical product sales; zero incentives are paid for
+simply enrolling or recruiting new members.
+</p>
+
+
+
+<h4>
+Inventory Loading Ban
+</h4>
+
+
+<p>
+Agents are prohibited from forcing downlines or consumers to buy excessive,
+unconsumable, or commercially unreasonable quantities of goods.
+</p>
+
+
+
+<h4>
+E-Commerce Restrictions
+</h4>
+
+
+<p>
+Listing, advertising, or selling Company products on external e-commerce sites like Amazon
+or Flipkart is strictly banned without written approval.
+</p>
+
+
+
+<h4>
+No Income Guarantees
+</h4>
+
+
+<p>
+IBA Associates must never guarantee fixed earnings or lifestyle promises to prospects;
+income relies entirely on actual sales volume execution.
+</p>
+
+
+
+<h3>
+Consumer Protection and Redressal
+</h3>
+
+
+
+<h4>
+Cooling-Off Period
+</h4>
+
+
+<p>
+All products feature a 100% money-back guarantee if returned unused and in saleable condition
+within the designated cooling-off window.
+</p>
+
+
+
+<h4>
+Grievance Resolution
+</h4>
+
+
+<p>
+Complaints submitted via call, mail, or the online cell receive a unique Tracking ID and are
+legally resolved by the Grievance Officer within 30 days.
+</p>
+
+
+
+<h4>
+Medical Disclaimer
+</h4>
+
+
+<p>
+Product literature provides aggregate informational summaries only and cannot substitute
+professional healthcare or cosmetic advice.
+</p>
+
+
+
+<h3>
+Scope, Governance, and Statutory Framework
+</h3>
+
+
+
+<h4>
+1.1 Scope of Application
+</h4>
+
+
+<p>
+This document governs the collection, storage, processing, and protection of personal data
+provided by consumers and Independent Business Agents (IBAs) to Paramount Enterprises
+(the "Company").
+</p>
+
+
+<p>
+These provisions apply to all digital interactions, product orders, and network operations.
+</p>
+
+
+
+<h4>
+1.2 Legislative Compliance
+</h4>
+
+
+<p>
+The Company operates in strict compliance with the following statutory frameworks:
+</p>
+
+
+<ul>
+
+<li>
+Information Technology Act, 2000 (Section 43A).
+</li>
+
+<li>
+Information Technology (Reasonable Security Practices) Rules, 2011.
+</li>
+
+<li>
+Consumer Protection Act, 2019.
+</li>
+
+<li>
+Consumer Protection (Direct Selling) Rules, 2021.
+</li>
+
+<li>
+Consumer Protection (E-Commerce) Rules, 2020.
+</li>
+
+<li>
+Indian Contract Act, 1872.
+</li>
+
+</ul>
+
+
+
+<h4>
+1.3 Corporate Identity
+</h4>
+
+
+<p>
+Paramount Enterprises operates its direct selling business under the legal entity Paramount Enterprises.
+</p>
+
+
+<p>
+Registration Number: XXXXXXXXXXXXXX
+</p>
+
+
+<p>
+Registered Office:
+Plot No. 10, Flat No. 202, S.V.Nilayam,
+Habsiguda Street No.8,
+Maheshwari Nagar,
+Hyderabad, Telangana,
+Pin: 50007, India.
+</p>
+
+
+<!-- PART 2 START -->
+
+
+<h4>
+1.4 Dynamic Amendments
+</h4>
+
+
+<p>
+The Company reserves the sole right to amend, modify, supplement, or rescind this contract,
+the Sales & Marketing Plan, or operational policies at any time.
+</p>
+
+
+<p>
+All revisions are published on the official website
+(www.bkgparamount.com) and are immediately binding on all Direct Sellers or IBA.
+</p>
+
+
+<p>
+Continuous association constitutes explicit acceptance of revisions.
+</p>
+
+
+
+
+<h3>
+Data Privacy, Protection, and Disclosures
+</h3>
+
+
+
+<h4>
+2.1 Information Categories
+</h4>
+
+
+<p>
+The Company collects and controls data through paper registration, WhatsApp,
+and its official web portals.
+</p>
+
+
+
+<ul>
+
+
+<li>
+Personal Information: Data capable of identifying a natural person, including name,
+contact details, gender, age, and website usage metrics.
+</li>
+
+
+<li>
+Sensitive Personal Data: Secure passwords, bank account numbers, financial history
+and government identification numbers (PAN and Aadhaar).
+</li>
+
+
+<li>
+Data freely available in the public domain is exempt.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+2.2 Data Security Measures
+</h4>
+
+
+<p>
+Digital credentials are protected using secure servers, advanced firewalls, and encryption
+protocols.
+</p>
+
+
+<p>
+The Company maintains strict technical and organizational safeguards to prevent
+unauthorized external access, accidental loss, or unlawful destruction.
+</p>
+
+
+<p>
+Complete internet security cannot be guaranteed, and users acknowledge this inherent risk.
+</p>
+
+
+
+
+<h4>
+2.3 Sharing Restrictions and Statutory Disclosures
+</h4>
+
+
+<ul>
+
+
+<li>
+Zero Third-Party Sharing: Sensitive personal data will not be leased, sold, or shared
+with external third-party marketers.
+</li>
+
+
+<li>
+Authorized Service Providers: Data may be shared with verified logistical partners,
+warehouses, banks, and payment gateways strictly to fulfill transactions.
+</li>
+
+
+<li>
+Statutory Obligations: Under the Direct Selling Rules, 2021, the Company is legally
+required to disclose the identity, address, and contact details of a specific IBA to a
+consumer upon written request to facilitate dispute resolution.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+2.4 Protection of Minors
+</h4>
+
+
+<p>
+The website and business opportunity are explicitly restricted to adults.
+The Company does not knowingly collect data from minors under 18.
+</p>
+
+
+<p>
+If such data is discovered, it will be deleted immediately upon notification.
+</p>
+
+
+
+
+
+<h3>
+Membership Eligibility, Onboarding, and Status
+</h3>
+
+
+
+
+<h4>
+3.1 Eligibility Criteria
+</h4>
+
+
+<p>
+To apply as an Independent Business Associate (IBA) or Direct Seller Agent (DSA),
+an applicant must meet the following mandatory conditions:
+</p>
+
+
+
+<ul>
+
+
+<li>
+Must be a citizen or authorized resident of the Republic of India.
+</li>
+
+
+<li>
+Must be at least 18 years of age.
+</li>
+
+
+<li>
+Must be legally competent to contract.
+</li>
+
+
+<li>
+Must not be an employee of any competing direct selling entity.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+3.2 Onboarding and Activation
+</h4>
+
+
+<ul>
+
+
+<li>
+Zero Entry Fees: Registration is completely free.
+The Company demands no subscription, joining, training, or renewal fees,
+nor any mandatory starter-kit purchases.
+</li>
+
+
+<li>
+Process: Applicants must complete the online application, upload verified KYC
+documents (PAN and Aadhaar), and accept the E-Contract terms digitally or submit
+the application manually to the office.
+</li>
+
+
+<li>
+Sponsoring requires a reference from an existing registered member.
+</li>
+
+
+<li>
+Authorization occurs when the Company accepts the submission and issues a unique
+Direct Seller ID and password.
+</li>
+
+
+<li>
+Members must maintain strict password confidentiality.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+3.3 Core Legal Status
+</h4>
+
+
+<p>
+Every member operates strictly as an independent contractor or IBA or DSA,
+commission-based seller, or independent reseller.
+</p>
+
+
+<p>
+This relationship is on a principal-to-principal basis and does not constitute an
+employment, labour, partnership, joint venture, principal-agent, or brokerage relationship.
+</p>
+
+
+<p>
+Members cannot bind the Company or incur expenses on its behalf.
+</p>
+
+
+
+
+<h3>
+Absolute Commercial Prohibitions
+</h3>
+
+
+
+
+<h4>
+4.1 Anti-Pyramid & Anti-Money Circulation Declarations
+</h4>
+
+
+<p>
+The Company operates purely as a product-driven direct selling entity.
+</p>
+
+
+<p>
+It formally distances itself from and explicitly prohibits all Pyramid Schemes
+and Money Circulation Schemes.
+</p>
+
+
+<p>
+No commission, remuneration, or financial benefit is ever paid for the mere
+enrolment or recruitment of new members.
+</p>
+
+
+<p>
+All incentives are derived strictly from the actual sale and turnover of physical goods.
+</p>
+
+
+
+
+<h4>
+4.2 Prohibition of Inventory Loading
+</h4>
+
+
+<p>
+Independent Business Associates must not induce, encourage, or force downline
+structures or consumers to purchase products in unreasonably large or commercially
+excessive quantities.
+</p>
+
+
+<p>
+Inventory must be constrained to volumes that can be realistically consumed or resold
+within a reasonable timeframe.
+</p>
+
+
+<p>
+Hoarding goods to artificially manipulate the compensation plan is strictly banned.
+</p>
+
+
+
+<!-- PART 2 END -->
+
+<!-- PART 3 START -->
+
+
+<h4>
+4.3 E-Commerce Channel Leakage
+</h4>
+
+
+<p>
+Direct Sellers are strictly prohibited from listing, advertising, stocking,
+or selling Company products on external e-commerce marketplaces,
+applications, or platforms including Amazon and Flipkart.
+</p>
+
+
+<p>
+Online distribution rights are exclusively managed by the Company,
+unless express prior written consent is granted.
+</p>
+
+
+
+
+<h4>
+4.4 Prohibition of Income Guarantees
+</h4>
+
+
+<p>
+IBAs or DSAs are strictly banned from promising, assuring, or projecting
+specific income amounts, fixed facilitation fees, or luxury lifestyle earnings
+to prospective members.
+</p>
+
+
+<p>
+All earnings depend entirely on individual performance, actual Product Sales
+Volumes, and precise execution of the Success & Marketing Plan.
+</p>
+
+
+
+
+<h3>
+Compensation, Sponsoring, and Product Rules
+</h3>
+
+
+
+
+<h4>
+5.1 Sales & Marketing Plan
+</h4>
+
+
+<p>
+All monetary rewards, bonuses, and commission structures are paid out according
+to the official Success & Marketing Plan available on the corporate website.
+</p>
+
+
+<p>
+Tariff updates, market forces, and government directives may alter the compensation
+rules, and the Company's decisions in these matters are absolute.
+</p>
+
+
+
+
+<h4>
+5.2 Banking and Financial Disbursements
+</h4>
+
+
+<p>
+All commission, incentive, discount, and refund payouts are made directly to the
+authorized member’s bank account via online electronic transfer.
+</p>
+
+
+<p>
+Members must ensure their submitted banking details are updated and fully compliant
+with Indian financial regulations and foreign exchange laws.
+</p>
+
+
+
+
+<h4>
+5.3 Prohibited Sponsoring Practices
+</h4>
+
+
+<p>
+Sponsors are legally prohibited from making any of the following a condition for
+assisting downlines:
+</p>
+
+
+<ul>
+
+
+<li>
+Requiring payment of an entrance or subscription fee.
+</li>
+
+
+<li>
+Requiring a mandatory minimum inventory level.
+</li>
+
+
+<li>
+Requiring the purchase of any specific "pack" or "kit".
+</li>
+
+
+<li>
+Demanding investments, bribes, or auxiliary fees.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+5.4 Lifetime Product Offerings
+</h4>
+
+
+<p>
+Direct Sellers are authorized to purchase products on a Maximum Retail Price (MRP)
+and subject strictly to product availability.
+</p>
+
+
+<p>
+This offer covers current inventory as well as products introduced by the Company
+in the future.
+</p>
+
+
+
+
+<h3>
+Agent Code of Conduct and Field Rules
+</h3>
+
+
+
+
+<h4>
+6.1 Affirmative Field Duties
+</h4>
+
+
+<p>
+When engaging with prospects, consumers, or other direct sellers,
+a Direct Seller must:
+</p>
+
+
+<ul>
+
+
+<li>
+Always carry and display the official corporate identity card.
+</li>
+
+
+<li>
+Solicit clients only with prior appointments and avoid unannounced visits.
+</li>
+
+
+<li>
+Truthfully identify themselves and state the commercial purpose of their visit.
+</li>
+
+
+<li>
+Provide clear and accurate demonstrations of product features, prices,
+payment terms, and return guidelines.
+</li>
+
+
+<li>
+Deliver an accurate invoice stating the order date, total amount billed,
+and delivery location.
+</li>
+
+
+<li>
+Maintain proper books of accounts regarding sales quantities, prices,
+and taxes as required by law.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+6.2 Prohibited Field Practices
+</h4>
+
+
+<p>
+A Direct Seller must not:
+</p>
+
+
+<ul>
+
+
+<li>
+Use misleading, unfair, or deceptive trade practices that violate consumer rights.
+</li>
+
+
+<li>
+Make unverifiable factual representations or promises that cannot be fulfilled.
+</li>
+
+
+<li>
+Misrepresent the direct selling opportunity, products, or the marketing plan.
+</li>
+
+
+<li>
+Force prospects to purchase non-mandatory business kits, training material,
+or literature.
+</li>
+
+
+<li>
+Sell any Company product at a price exceeding the Maximum Retail Price (MRP)
+printed on the label.
+</li>
+
+
+<li>
+Indulge in depository, unauthorized chit-fund, or money laundering activities.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+6.3 Lines of Sponsorship Integrity
+</h4>
+
+
+<p>
+Members cannot change their Line of Sponsorship or engage in parallel group
+operations under different names.
+</p>
+
+
+<p>
+Switching lines is permitted only after explicit corporate approval following
+a strict three-month inactivity period.
+</p>
+
+
+<p>
+Violation results in the immediate termination of all associated user IDs.
+</p>
+
+
+
+
+<h3>
+Intellectual Property and Corporate Disclaimers
+</h3>
+
+
+
+
+<h4>
+7.1 Intellectual Property Restrictions
+</h4>
+
+
+<p>
+The corporate names, trademarks, logotypes, designs, and brand symbols of
+"Paramount" and "Paramount Enterprises" are the exclusive property of the Company.
+</p>
+
+
+<p>
+Direct Sellers have no intellectual property rights and are strictly prohibited
+from using these marks in their personal capacity, for personal use, or on
+unapproved literature and online media without prior written corporate authorization.
+</p>
+
+
+
+
+<h4>
+7.2 Core Corporate Disclaimer
+</h4>
+
+
+<p>
+The Company is exclusively dedicated to direct product sales through word-of-mouth
+and product demonstrations.
+</p>
+
+
+<p>
+It does not offer financial investment models, wealth generation schemes,
+chit funds, or investment packages.
+</p>
+
+
+
+
+<!-- PART 3 END -->
+
+<!-- PART 4 START -->
+
+
+<h4>
+7.3 Health and Cosmetics Disclaimer
+</h4>
+
+
+<p>
+Product information, summaries, and digital content are published strictly for
+general informational purposes.
+</p>
+
+
+<p>
+They are not intended as a substitute for professional medical or cosmetic advice.
+</p>
+
+
+<p>
+The Company offers no medical opinions, diagnoses, healthcare advice, or treatment
+charts on its platforms.
+</p>
+
+
+
+
+<h4>
+7.4 Language and Translation Liability
+</h4>
+
+
+<p>
+Corporate documents are originally drafted in English.
+</p>
+
+
+<p>
+While IBA or DSA affirm that terms have been explained to them in their vernacular
+tongue, the English version remains the single accurate and legally binding text.
+</p>
+
+
+<p>
+The Company accepts no legal liability for inaccuracies arising from translation
+software tools.
+</p>
+
+
+
+
+<h3>
+Consumer Protection, Returns, and Buybacks
+</h3>
+
+
+
+
+<h4>
+8.1 Cooling-Off Period Right
+</h4>
+
+
+<p>
+Every new Direct Seller is entitled to an irreversible 30-day cooling-off period
+starting from the date of contract acceptance.
+</p>
+
+
+<p>
+Within this window, the member may rescind the contract without penalty and claim
+a full refund on any purchased products or materials, subject to returning the goods
+in a saleable condition.
+</p>
+
+
+
+
+<h4>
+8.2 Product Return and Buyback Policy
+</h4>
+
+
+<p>
+The Company offers a 100% satisfaction guarantee on marketable inventory.
+</p>
+
+
+
+<h5>
+Condition:
+</h5>
+
+
+<p>
+Products must be unopened, sealed, unexpired, non-seasonal, and completely
+undamaged.
+</p>
+
+
+
+<h5>
+Timeline:
+</h5>
+
+
+<p>
+Returns must be executed within 30 days of the invoice date or delivery date,
+whichever is later, and must be accompanied by the original purchase invoice.
+</p>
+
+
+
+<h5>
+Adjustments:
+</h5>
+
+
+<p>
+The refund amount is subject to the deduction of any bonuses or incentives already
+paid out to the returning direct seller and their operational upline.
+</p>
+
+
+<p>
+Achieved business points or kit points must be reversed upon repurchase.
+Intentional damage voids the warranty.
+</p>
+
+
+
+
+<h4>
+8.3 Corporate Commitments to Sellers
+</h4>
+
+
+<p>
+To support its network, the Company is contractually bound to:
+</p>
+
+
+<ul>
+
+
+<li>
+Provide a mandatory orientation session covering the marketing plan and operations.
+</li>
+
+
+<li>
+Maintain an updated website showing contact information, product facts,
+and pricing grids.
+</li>
+
+
+<li>
+Deliver periodic account statements detailing individual sales, purchases,
+and accrued commissions.
+</li>
+
+
+<li>
+Abstain from making any unverifiable promises or false representations
+to prospects.
+</li>
+
+
+</ul>
+
+
+
+
+<h3>
+Breach, Suspension, and Termination
+</h3>
+
+
+
+
+<h4>
+9.1 Suspension Protocol
+</h4>
+
+
+<p>
+Upon receiving an alert regarding a breach of policy, mis-selling, or undue
+practices, the Company can immediately suspend or block a member's account.
+</p>
+
+
+<p>
+A 15-day written notice will be issued calling upon the Direct Seller to explain
+their conduct.
+</p>
+
+
+<p>
+The account remains suspended until a satisfactory written response is evaluated.
+</p>
+
+
+
+
+<h4>
+9.2 Clear Grounds for Revocation
+</h4>
+
+
+<p>
+The Company may terminate the E-Contract if a member engages in any of the
+following acts:
+</p>
+
+
+<ul>
+
+
+<li>
+Spreading derogatory remarks or unfounded allegations against the entity,
+its directors, or its products.
+</li>
+
+
+<li>
+Engaging in mis-selling, deceptive advertising, or unfair trade practices.
+</li>
+
+
+<li>
+Violating national taxation laws, GST regulations, or consumer protection guidelines.
+</li>
+
+
+<li>
+Spying, inducing contract breaches, or conspiring to disrupt fellow network members.
+</li>
+
+
+<li>
+Conducting unauthorized direct selling activities in geographic markets where
+the Company has no legal presence.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+9.3 Voluntary Termination
+</h4>
+
+
+<p>
+A Direct Seller may voluntarily terminate this contract at any time by submitting
+a standard resignation form to the corporate Head Office, subject to a 15-day prior
+written notice period.
+</p>
+
+
+
+
+<h4>
+9.4 Post-Termination Obligations
+</h4>
+
+
+<p>
+Immediately upon termination, the individual must:
+</p>
+
+
+<ul>
+
+
+<li>
+Stop representing the Company in any transaction or capacity.
+</li>
+
+
+<li>
+Hand over their official identification card to the corporate office.
+</li>
+
+
+<li>
+Destroy all physical and digital material obtained from the corporate domain.
+</li>
+
+
+<li>
+Erase all corporate trademarks, logotypes, and symbols from their personal tools.
+</li>
+
+
+<li>
+Fulfil and satisfy all pending financial obligations and liabilities accrued during
+the contract.
+</li>
+
+
+<li>
+Members terminated for critical breaches are permanently barred from re-entering
+the network.
+</li>
+
+
+</ul>
+
+
+
+
+<!-- PART 4 END -->
+
+<!-- PART 5 START -->
+
+
+<h3>
+Redressal, Arbitration, and Legal Jurisdiction
+</h3>
+
+
+
+
+<h4>
+10.1 Grievance Redressal Pipeline
+</h4>
+
+
+<p>
+The Company maintains a structured, internal pipeline to log and resolve consumer
+and IBA or DSA complaints.
+</p>
+
+
+<ul>
+
+
+<li>
+Modes: Grievances are accepted via phone calls, letters, emails, walk-ins,
+or the online cell.
+</li>
+
+
+<li>
+Tracking: Every complaint is registered in the grievance software, which
+automatically issues a unique Track ID to the complainant’s mobile number
+and email.
+</li>
+
+
+<li>
+Resolution Windows: Initial reviews are handled by customer care executives
+within 7 working days.
+</li>
+
+
+</ul>
+
+
+<p>
+Unresolved items escalate to the Grievance Redressal Committee headed by the
+Grievance Officers:
+</p>
+
+
+<ul>
+
+<li>
+Bingi Krishna Goud
+(grievance@bkgparamountindia.com)
+</li>
+
+
+<li>
+Designated Grievance Officer
+(grievance1@BKGParamountindia.com)
+</li>
+
+</ul>
+
+
+<p>
+The final resolution must be delivered expeditiously within 30 days of registration.
+</p>
+
+
+
+
+<h4>
+10.2 Amicable Settlement and Arbitration
+</h4>
+
+
+<p>
+Parties must first attempt to resolve all contractual differences or performance
+disputes amicably via the Grievance Redressal Policy.
+</p>
+
+
+<p>
+If an amicable solution cannot be achieved, the dispute must be submitted to
+binding arbitration under the provisions of the Arbitration and Conciliation Act,
+1996 or its amendments acts.
+</p>
+
+
+<p>
+The matter will be resolved by a mutually accepted sole arbitrator appointed by
+the Company, whose final award is binding.
+</p>
+
+
+
+
+<h4>
+10.3 Force Majeure Clause
+</h4>
+
+
+<p>
+The Company is not liable for delayed performance or complete non-performance
+of contract duties caused by war, civil commotion, acts of public enemies,
+government orders, departmental inquiries, orders by government authorities,
+epidemics, fires, floods, natural disasters, or acts of God.
+</p>
+
+
+<p>
+Operational activities must resume immediately once the force majeure event
+terminates.
+</p>
+
+
+
+
+<h4>
+10.4 Governing Law and Exclusive Jurisdiction
+</h4>
+
+
+<p>
+This E-Contract constitutes a valid electronic record under applicable IT laws
+and requires no physical signatures.
+</p>
+
+
+<p>
+It is governed and construed exclusively by the laws of India.
+</p>
+
+
+<p>
+Any remaining legal claims, court actions, or arbitral sessions fall under the
+exclusive territorial jurisdiction of the courts at Hyderabad and legal forums
+located in Hyderabad, Telangana, India.
+</p>
+
+
+
+
+<h3>
+Real Estate Advance Booking Terms (Separate Framework)
+</h3>
+
+
+
+
+<h4>
+11.1 Advance Booking Scope
+</h4>
+
+
+<p>
+This section governs real estate transactions managed by BGK Paramount Enterprises,
+being represented by the Authorised Bingi Krishna Goud and is distinct from the
+multi-level product marketing network.
+</p>
+
+
+<p>
+Receipts issued under this section acknowledge only the collection of an Advance
+Booking Amount and do not establish a sale deed, land allotment, title transfer,
+or property ownership right.
+</p>
+
+
+
+
+<h4>
+11.2 Financial Conditions and Refunds
+</h4>
+
+
+<ul>
+
+
+<li>
+Non-Refundable Baseline: The Advance Booking Amount of Rs. 10,000/- is strictly
+non-refundable, except where a refund is mandated by regional property laws
+or explicit corporate undertakings.
+</li>
+
+
+<li>
+Allotment Threshold: Final plot allotment is strictly conditional upon the customer
+paying a minimum of 25% of the total plot consideration and meeting the Company’s
+allotment checklists.
+</li>
+
+
+<li>
+Verified amounts are adjusted against the final sale consideration.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+11.3 Project Modifications and Cancellations
+</h4>
+
+
+<ul>
+
+
+<li>
+Provisional Nature: All bookings remain provisional pending detailed verification
+of customer KYC, plot availability, and statutory administrative approvals.
+</li>
+
+
+<li>
+Corporate Alterations: The Company retains the right to modify plot numbers,
+dimensions, or layout locations due to planning variations or regulatory demands,
+subject to plot availability.
+</li>
+
+
+<li>
+Default Penalty: If the customer fails to clear payments within the stipulated
+timeline, the provisional booking stands cancelled without notice, and the Company
+may re-allot the plot to another buyer.
+</li>
+
+
+</ul>
+
+
+
+
+<h4>
+11.4 Auxiliary Charges and Independent Verification
+</h4>
+
+
+<ul>
+
+
+<li>
+Statutory Levies: Property registration, stamp duties, local taxes, development
+charges, maintenance fees, and conversion levies are borne entirely by the customer
+or IBA / DSA from his/her earnings.
+</li>
+
+
+<li>
+Independent Diligence: The buyer acknowledges that they have independently
+inspected the site location, property suitability, and project specifications.
+</li>
+
+
+<li>
+No unrecorded oral promises are binding on the Company.
+</li>
+
+
+<li>
+Disputes arising from real estate bookings are subject to local state laws where
+the property is physically situated.
+</li>
+
+
+</ul>
+
+
+
+
+<h3>
+Privacy Policy
+</h3>
+
+
+
+<p>
+This privacy policy describes how Paramount Enterprises (Hereinafter Paramount)
+uses personal data collected or received from Paramount Direct sellers.
+</p>
+
+
+<p>
+It describes how we may collect or receive your personal data, the types of
+personal data we may collect, how we use, share and protect these data,
+how long we retain these data, your rights, and how you can contact us
+about our privacy practices.
+</p>
+
+
+
+
+<h4>
+Definitions
+</h4>
+
+
+<p>
+Personal information means any information that relates to a natural person,
+which, either directly or indirectly, in combination with other information
+available or likely to be available with a body corporate, is capable of
+identifying such a person.
+</p>
+
+
+<p>
+Sensitive data means any personal information that consists of information
+relating to:
+</p>
+
+
+<ul>
+
+
+<li>
+Password
+</li>
+
+
+<li>
+Financial information such as bank account, credit card or debit card or
+other payment instrument details
+</li>
+
+
+<li>
+Physical, physiological and mental health condition
+</li>
+
+
+<li>
+Sexual orientation
+</li>
+
+
+<li>
+Medical records and history
+</li>
+
+
+<li>
+Biometric information
+</li>
+
+
+<li>
+PAN card, Aadhaar card, driving license, voting card details or any other
+identification proofs
+</li>
+
+
+<li>
+Any detail relating to the above collected by intermediary or agent required
+to service the operations of the company
+</li>
+
+
+</ul>
+
+
+
+<p>
+Any information that is freely available and accessible in public domain and
+can be accessed under Right to Information Act, 2005 or any other law in force
+shall not be considered as sensitive data.
+</p>
+
+
+
+
+<h4>
+How We May Collect or Receive Personal Data from You
+</h4>
+
+
+<p>
+Paramount collects your personal data through the registration form that you
+complete and send in paper form or electronically through WhatsApp or the
+Paramount website in order to become a Paramount Direct Seller.
+</p>
+
+
+<p>
+We always collect personal information using lawful and fair means.
+</p>
+
+
+
+
+<h4>
+Collection Information
+</h4>
+
+
+<p>
+Any personal information provided on or gathered by the Website will be collected,
+stored, retained and controlled by Paramount Enterprises situated at:
+</p>
+
+
+<p>
+Plot No: 10, Flat No.202, S.V. Nilayam,
+Maheshwari Nagar,
+Habsiguda Street No.8,
+Hyderabad, Telangana,
+PIN. 50007.
+</p>
+
+
+
+
+<h3>
+SELF-DECLARATION
+</h3>
+
+
+<p>
+Pursuant to Clause 5(c) of the Consumer Protection (Direct Selling) Rules, 2021,
+Paramount Enterprises hereby declares full compliance with all applicable provisions
+issued by the Department of Consumer Affairs, Ministry of Consumer Affairs,
+Food and Public Distribution.
+</p>
+
+
+<p>
+We explicitly affirm that neither Paramount Enterprises, nor any Director(s)
+appointed by BKG Paramount Enterprises, is involved in any Pyramid Scheme or
+Money Circulation Scheme.
+</p>
+
+
+
+
+<h3>
+WEBSITE DISCLAIMER
+</h3>
+
+
+<ul>
+
+
+<li>
+We Are Not an Investment Company: We do not offer financial investments,
+investment schemes, or chit funds.
+</li>
+
+
+<li>
+What We Do: We are a direct selling company. We market and sell high-quality
+products through word-of-mouth recommendations, product displays, and live
+demonstrations.
+</li>
+
+
+<li>
+How Earnings Work: The only way to earn money with us is through the official
+Sales & Marketing Plan available on this website.
+</li>
+
+
+<li>
+Buying our products does not guarantee you an income.
+</li>
+
+
+<li>
+Distributors only earn money based on the actual sales they generate.
+</li>
+
+
+<li>
+The company is not responsible for any misleading income promises made by
+individual distributors.
+</li>
+
+
+</ul>
+
+
+<p>
+By completing this registration, you confirm that you have read, understood,
+and accepted all Terms & Conditions of BGK Paramount Enterprises.
+</p>
+
+
+
+<!-- PART 5 END -->
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+<style>
+
+/* ==============================
+   TERMS & CONDITIONS POPUP
+================================*/
+
+
+.terms-modal {
+
+    display:none;
+
+    position:fixed;
+
+    z-index:99999;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(0,0,0,0.65);
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+}
+
+
+
+.terms-content {
+
+
+    background:#ffffff;
+
+    width:100%;
+
+    max-width:750px;
+
+    max-height:85vh;
+
+    border-radius:15px;
+
+    padding:30px;
+
+    position:relative;
+
+    box-shadow:0 15px 40px rgba(0,0,0,0.35);
+
+    animation:termsPopup .3s ease;
+
+}
+
+
+
+@keyframes termsPopup {
+
+
+from {
+
+    transform:scale(.8);
+
+    opacity:0;
+
+}
+
+
+to {
+
+    transform:scale(1);
+
+    opacity:1;
+
+}
+
+
+}
+
+
+
+
+/* Close Button */
+
+
+.close-terms {
+
+
+    position:absolute;
+
+    right:18px;
+
+    top:10px;
+
+
+    background:none;
+
+    border:none;
+
+
+    font-size:35px;
+
+    font-weight:bold;
+
+
+    cursor:pointer;
+
+    color:#333;
+
+
+}
+
+
+
+.close-terms:hover {
+
+    color:#d00000;
+
+}
+
+
+
+
+.terms-content h2 {
+
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    font-size:28px;
+
+}
+
+
+
+
+.terms-body {
+
+
+    max-height:60vh;
+
+    overflow-y:auto;
+
+    padding-right:15px;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+}
+
+
+
+
+.terms-body h3 {
+
+
+    margin-bottom:15px;
+
+}
+
+
+
+.terms-body h4 {
+
+
+    margin-top:20px;
+
+    margin-bottom:8px;
+
+}
+
+
+
+.terms-body p {
+
+
+    margin-bottom:10px;
+
+}
+
+
+
+
+
+/* Terms Link */
+
+
+.terms-link {
+
+
+    color:#0057ff;
+
+    text-decoration:underline;
+
+    cursor:pointer;
+
+    margin-left:5px;
+
+}
+
+
+
+.terms-link:hover {
+
+
+    color:#ff0000;
+
+}
+
+
+
+
+
+/* Mobile Responsive */
+
+
+@media(max-width:600px){
+
+
+
+.terms-content {
+
+
+    padding:20px;
+
+    max-height:90vh;
+
+}
+
+
+
+.terms-content h2 {
+
+    font-size:22px;
+
+}
+
+
+
+.terms-body {
+
+
+    font-size:14px;
+
+}
+
+
+.close-terms {
+
+
+    font-size:30px;
+
+}
+
+
+}
+
+
+
+</style>
+
+
+
+
+
+<script>
+
+
+// Open Terms Popup
+
+function openTerms(){
+
+
+    document.getElementById("termsModal").style.display="flex";
+
+
+}
+
+
+
+
+
+// Close Terms Popup
+
+function closeTerms(){
+
+
+    document.getElementById("termsModal").style.display="none";
+
+
+}
+
+
+
+
+
+// Close when clicking outside popup
+
+
+window.onclick=function(event){
+
+
+    let modal=document.getElementById("termsModal");
+
+
+    if(event.target == modal){
+
+
+        modal.style.display="none";
+
+
+    }
+
+
+}
+
+
+
+
+
+// Prevent form submit when clicking Terms link
+
+document.querySelector(".terms-link").addEventListener("click", function(event){
+
+
+    event.preventDefault();
+
+
+});
+
+
+
+</script>
+
+
 {% endblock %}

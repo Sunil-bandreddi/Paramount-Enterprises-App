@@ -4953,3 +4953,315 @@ grid-template-columns:1fr;
 
 
 }
+
+/* ===========================
+   Investor Binary Tree Design
+=========================== */
+
+
+.level-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 20px 10px;
+}
+
+
+/* Individual level card */
+
+.level-card {
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    margin: 15px auto;
+
+    width: fit-content;
+
+    min-width: 240px;
+
+    max-width: 100%;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+
+}
+
+
+
+/* Level Header */
+
+.level-header {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:15px;
+
+}
+
+
+.level-header h3 {
+
+    margin:0;
+
+    font-size:18px;
+
+}
+
+
+
+.position {
+
+    padding:5px 12px;
+
+    border-radius:20px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:13px;
+
+}
+
+
+
+
+/* Investor Information */
+
+.investor-details {
+
+    font-size:14px;
+
+}
+
+
+.investor-details p {
+
+    margin:8px 0;
+
+    word-break:break-word;
+
+}
+
+
+
+
+
+/* Children Layout */
+
+.children-container {
+
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+
+    gap:30px;
+
+    margin-top:30px;
+
+
+}
+
+
+
+
+.child-node {
+
+
+    flex:1;
+
+}
+
+
+
+
+/* ===========================
+      Tablet
+=========================== */
+
+
+@media(max-width:900px){
+
+
+    .children-container {
+
+
+        gap:15px;
+
+    }
+
+
+    .level-card {
+
+
+        min-width:220px;
+
+        padding:15px;
+
+    }
+
+
+}
+
+
+
+
+/* ===========================
+       Mobile
+=========================== */
+
+
+@media(max-width:600px){
+
+
+    .level-container {
+
+
+        overflow-x:auto;
+
+        padding:10px;
+
+    }
+
+
+
+    .children-container {
+
+
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:15px;
+
+
+    }
+
+
+
+    .child-node {
+
+
+        width:100%;
+
+    }
+
+
+
+    .level-card {
+
+
+        width:90%;
+
+        min-width:auto;
+
+        margin:10px auto;
+
+    }
+
+
+
+    .level-header {
+
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+
+
+    .level-header h3 {
+
+
+        font-size:16px;
+
+    }
+
+
+}
+
+
+/* Return to Dashboard Button */
+
+.dashboard-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 12px 25px;
+
+    margin-top: 15px;
+
+    background:var(--maroon);
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+
+    border: 1px solid var(--maroon);
+
+    transition: all 0.3s ease;
+
+    box-shadow: 0 4px 10px var(--maroon);
+
+}
+
+
+
+.dashboard-btn:hover {
+
+    background: var(--maroon);
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 6px 15px var(--maroon);
+
+}
+
+
+
+/* Mobile Responsive */
+
+@media(max-width:600px){
+
+    .dashboard-btn {
+
+        width:100%;
+
+        padding:12px;
+
+        font-size:14px;
+
+        text-align:center;
+
+    }
+
+}

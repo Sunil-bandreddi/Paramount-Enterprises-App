@@ -82,3 +82,108 @@ class RegisterForm(forms.Form):
             cleaned_data["position"] = ""
 
         return cleaned_data
+
+
+class InvestorEditForm(forms.Form):
+
+
+    full_name = forms.CharField(
+        max_length=100
+    )
+
+
+    dob = forms.DateField(
+        input_formats=["%Y-%m-%d"],
+        widget=forms.DateInput(
+            attrs={
+                "type":"date"
+            }
+        )
+    )
+
+
+    mobile = forms.CharField(
+        max_length=10
+    )
+
+
+    email = forms.EmailField(
+        required=False
+    )
+
+
+    address = forms.CharField(
+        widget=forms.Textarea
+    )
+
+
+    city = forms.CharField(
+        max_length=50
+    )
+
+
+    state = forms.CharField(
+        max_length=50
+    )
+
+
+    aadhar = forms.CharField(
+        max_length=12
+    )
+
+
+    pan = forms.CharField(
+        max_length=10,
+        required=False
+    )
+
+
+    account_no = forms.CharField(
+        max_length=30
+    )
+
+
+    bank_name = forms.CharField(
+        max_length=100
+    )
+
+
+    branch = forms.CharField(
+        max_length=100
+    )
+
+
+    ifsc_code = forms.CharField(
+        max_length=20
+    )
+
+
+    nominee = forms.CharField(
+        max_length=100
+    )
+
+
+    nominee_relation = forms.CharField(
+        max_length=50
+    )
+
+
+
+    def clean_mobile(self):
+
+        mobile = "".join(
+            filter(
+                str.isdigit,
+                self.cleaned_data["mobile"]
+            )
+        )
+
+
+        if len(mobile)!=10:
+
+            raise forms.ValidationError(
+                "Enter valid mobile number"
+            )
+
+
+        return mobile

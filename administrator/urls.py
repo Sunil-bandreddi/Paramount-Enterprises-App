@@ -1,48 +1,119 @@
 from django.urls import path
 
-from .views import (
-    admin_dashboard,
-    change_status,
-    investor_chain,
-    download_report
-)
-
-
-app_name="administrator"
+from administrator import views
 
 
 
-urlpatterns=[
+app_name = "administrator"
 
+
+
+urlpatterns = [
+
+
+
+    # Admin Dashboard
 
     path(
+
         "",
-        admin_dashboard,
+
+        views.admin_dashboard,
+
         name="admin_dashboard"
+
     ),
 
 
 
+
+
+
+    # Activate / Deactivate Investor
+
     path(
+
         "change-status/<int:id>/",
-        change_status,
+
+        views.change_status,
+
         name="change_status"
+
     ),
 
 
 
+
+
+
+    # Investor Binary Chain
+
     path(
-        "chain/<int:id>/",
-        investor_chain,
+
+        "investor-chain/<int:id>/",
+
+        views.investor_chain,
+
         name="investor_chain"
+
     ),
 
 
 
+
+
+
+    # Edit Investor
+
     path(
+
+        "investor-edit/<int:id>/",
+
+        views.edit_investor,
+
+        name="edit_investor"
+
+    ),
+
+
+
+
+
+
+    # Delete Investor
+
+    path(
+
+        "investor-delete/<int:id>/",
+
+        views.delete_investor,
+
+        name="delete_investor"
+
+    ),
+
+
+
+
+
+
+    # Download Reports
+
+    # ?type=daily
+
+    # ?type=weekly
+
+    # ?type=overall
+
+
+    path(
+
         "download-report/",
-        download_report,
+
+        views.download_report,
+
         name="download_report"
+
     ),
 
 

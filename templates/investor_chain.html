@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div class="admin-container">
+
+
+    <div class="admin-header card">
+
+
+        <h1>
+            Investor Network Levels
+        </h1>
+
+
+        <p>
+            Binary Referral Level Structure
+        </p>
+
+
+        <a href="{% url 'administrator:admin_dashboard' %}" class="dashboard-btn">
+            ← Return to Dashboard
+        </a>
+
+
+    </div>
+
+
+
+    <div class="level-container">
+
+
+        {% include "level_tree.html" with node=tree %}
+
+
+    </div>
+
+
+
+</div>
+
+
+{% endblock %}

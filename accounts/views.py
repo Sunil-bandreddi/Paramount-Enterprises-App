@@ -58,14 +58,50 @@ def gallery(request):
 
 
 
+from .models import ContactEnquiry
+from django.contrib import messages
 
 def contact(request):
+
+    if request.method == "POST":
+
+        name = request.POST.get("name")
+
+        email = request.POST.get("email")
+
+        phone = request.POST.get("phone")
+
+        message = request.POST.get("message")
+
+
+
+        ContactEnquiry.objects.create(
+
+            name=name,
+
+            email=email,
+
+            phone=phone,
+
+            message=message
+
+        )
+
+
+        messages.success(
+            request,
+            "Your enquiry has been submitted successfully."
+        )
+
+
+        return redirect("contact")
+
+
 
     return render(
         request,
         "contact.html"
     )
-
 
 
 
@@ -131,7 +167,7 @@ def login_view(request):
 
             # ADMIN LOGIN
 
-            if user.is_staff or user.is_superuser:
+            if user.is_staff :
 
 
                 return redirect(
@@ -185,14 +221,6 @@ def login_view(request):
 
 
 
-
-# ============================
-# REGISTER
-# ============================
-
-# ============================
-# REGISTER
-# ============================
 
 # ============================
 # REGISTER
@@ -369,7 +397,13 @@ def register(request):
 
 
 
-            return redirect("login")
+            return render(
+                request,
+                "reg_success.html",
+                {
+                    "investor": investor
+                }
+            )
 
 
 

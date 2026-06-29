@@ -1,0 +1,107 @@
+<div class="level-card">
+
+
+<div class="level-header">
+
+
+<h3>
+
+Level {{node.level}}
+
+</h3>
+
+
+
+<span class="position">
+
+{% if node.position %}
+
+{{node.position}}
+
+{% endif %}
+
+</span>
+
+
+</div>
+
+
+
+
+
+<div class="investor-details">
+
+
+<p>
+
+<strong>ID:</strong>
+
+{{node.investor.investor_id}}
+
+</p>
+
+
+
+
+<p>
+
+<strong>Name:</strong>
+
+{{node.investor.full_name}}
+
+</p>
+
+
+
+
+<p>
+
+<strong>Mobile:</strong>
+
+{{node.investor.mobile}}
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+{% if node.children %}
+
+
+<div class="children-container">
+
+
+
+{% for child in node.children %}
+
+
+<div class="child-node">
+
+
+{% include "level_tree.html" with node=child %}
+
+
+</div>
+
+
+{% endfor %}
+
+
+
+</div>
+
+
+
+{% endif %}
+
+
+
+
+
+</div>

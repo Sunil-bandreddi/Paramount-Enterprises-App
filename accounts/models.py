@@ -8,7 +8,7 @@ class Investor(models.Model):
 
     STATUS=(
 
-        ("PENDING","PENDING"),
+        
 
         ("ACTIVE","ACTIVE"),
 
@@ -137,7 +137,7 @@ class Investor(models.Model):
     status=models.CharField(
         max_length=20,
         choices=STATUS,
-        default="PENDING"
+        default="ACTIVE"
     )
 
 
@@ -161,3 +161,36 @@ class InvestorSequence(models.Model):
     current_number=models.IntegerField(
         default=0
     )
+
+
+
+class ContactEnquiry(models.Model):
+
+    name = models.CharField(
+        max_length=100
+    )
+
+    email = models.EmailField()
+
+    phone = models.CharField(
+        max_length=20,
+        blank=True,
+        null=True
+    )
+
+    message = models.TextField()
+
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+
+    is_read = models.BooleanField(
+        default=False
+    )
+
+
+    def __str__(self):
+
+        return self.name

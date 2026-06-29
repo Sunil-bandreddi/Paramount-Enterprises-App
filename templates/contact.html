@@ -21,7 +21,19 @@ Contact — Paramount Enterprises
 
 <section class="contact-section">
 
+{% if messages %}
 
+{% for message in messages %}
+
+<div class="contact-alert">
+
+{{ message }}
+
+</div>
+
+{% endfor %}
+
+{% endif %}
 
 <div class="container">
 

@@ -1,0 +1,563 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Registration Successful | Paramount Enterprises
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-shell">
+
+
+<div class="success-card">
+
+
+<div class="success-icon">
+✓
+</div>
+
+
+
+<h1>
+Registration Successful
+</h1>
+
+
+<p class="success-subtitle">
+
+Your registration has been completed successfully.
+
+</p>
+
+
+
+<div class="details-box">
+
+
+<div class="detail-row">
+
+<div class="label">
+Generated ID
+</div>
+
+<div class="value highlight">
+{{ investor.investor_id }}
+</div>
+
+</div>
+
+
+
+
+<div class="detail-row">
+
+<div class="label">
+Full Name
+</div>
+
+<div class="value">
+{{ investor.full_name }}
+</div>
+
+</div>
+
+
+
+
+<div class="detail-row">
+
+<div class="label">
+Aadhar Number
+</div>
+
+<div class="value">
+
+{{ investor.aadhar }}
+
+</div>
+
+</div>
+
+
+
+
+<div class="detail-row">
+
+<div class="label">
+Mobile Number
+</div>
+
+<div class="value">
+
+{{ investor.mobile }}
+
+</div>
+
+</div>
+
+
+
+<div class="detail-row">
+
+<div class="label">
+Registration Date
+</div>
+
+<div class="value">
+
+{{ investor.created|date:"d M Y" }}
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="notice-box">
+
+
+<strong>
+Important:
+</strong>
+
+
+<p>
+
+Please save your Generated ID. You need this ID for all future communication and account access.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<a href="{% url 'login' %}" class="primary-button">
+
+
+Continue To Login
+
+
+</a>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<style>
+
+
+/* ===========================
+SUCCESS PAGE
+=========================== */
+
+
+.success-card{
+
+
+width:100%;
+
+max-width:600px;
+
+margin:40px auto;
+
+background:#ffffff;
+
+padding:35px;
+
+border-radius:18px;
+
+box-shadow:0 10px 35px rgba(0,0,0,0.12);
+
+text-align:center;
+
+}
+
+
+
+
+
+.success-icon{
+
+
+width:75px;
+
+height:75px;
+
+margin:0 auto 20px;
+
+border-radius:50%;
+
+background:#0c9b45;
+
+color:white;
+
+font-size:45px;
+
+font-weight:bold;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+
+
+
+
+.success-card h1{
+
+
+font-size:32px;
+
+margin-bottom:10px;
+
+color:#222;
+
+}
+
+
+
+
+.success-subtitle{
+
+
+font-size:16px;
+
+color:#666;
+
+margin-bottom:30px;
+
+}
+
+
+
+
+
+.details-box{
+
+
+width:100%;
+
+border:1px solid #ddd;
+
+border-radius:12px;
+
+overflow:hidden;
+
+}
+
+
+
+
+
+.detail-row{
+
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:16px 20px;
+
+border-bottom:1px solid #eee;
+
+text-align:left;
+
+}
+
+
+
+
+
+.detail-row:last-child{
+
+border-bottom:none;
+
+}
+
+
+
+
+.label{
+
+
+font-weight:600;
+
+color:#444;
+
+}
+
+
+
+
+
+.value{
+
+
+font-weight:500;
+
+color:#222;
+
+word-break:break-word;
+
+}
+
+
+
+
+.highlight{
+
+
+color:#0057ff;
+
+font-size:18px;
+
+font-weight:700;
+
+}
+
+
+
+
+
+.notice-box{
+
+
+margin:25px 0;
+
+padding:15px;
+
+background:#f7f9ff;
+
+border-left:4px solid #0057ff;
+
+border-radius:8px;
+
+text-align:left;
+
+}
+
+
+
+
+
+.notice-box p{
+
+
+margin:8px 0 0;
+
+font-size:14px;
+
+color:#555;
+
+line-height:1.5;
+
+}
+
+
+
+
+.primary-button{
+
+
+display:inline-flex;
+
+justify-content:center;
+
+align-items:center;
+
+text-decoration:none;
+
+min-width:220px;
+
+}
+
+
+
+
+
+/* ===========================
+TABLET VIEW
+=========================== */
+
+
+@media(max-width:768px){
+
+
+
+.success-card{
+
+
+margin:25px 15px;
+
+padding:25px;
+
+}
+
+
+
+.success-card h1{
+
+font-size:26px;
+
+}
+
+
+
+.detail-row{
+
+
+padding:14px;
+
+}
+
+
+
+}
+
+
+
+
+/* ===========================
+MOBILE VIEW
+=========================== */
+
+
+@media(max-width:480px){
+
+
+
+.success-card{
+
+
+padding:20px;
+
+border-radius:14px;
+
+}
+
+
+
+.success-icon{
+
+
+width:60px;
+
+height:60px;
+
+font-size:35px;
+
+}
+
+
+
+.success-card h1{
+
+
+font-size:22px;
+
+}
+
+
+
+.success-subtitle{
+
+
+font-size:14px;
+
+}
+
+
+
+
+.detail-row{
+
+
+display:block;
+
+padding:14px;
+
+}
+
+
+
+.label{
+
+
+font-size:13px;
+
+margin-bottom:6px;
+
+}
+
+
+
+.value{
+
+
+font-size:15px;
+
+}
+
+
+
+.highlight{
+
+
+font-size:16px;
+
+}
+
+
+
+.notice-box{
+
+
+font-size:13px;
+
+}
+
+
+
+.primary-button{
+
+
+width:100%;
+
+min-width:auto;
+
+}
+
+
+
+}
+
+
+
+</style>
+
+
+{% endblock %}

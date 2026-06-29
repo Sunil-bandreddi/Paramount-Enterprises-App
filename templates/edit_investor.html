@@ -1,0 +1,931 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Investor | Paramount Enterprises
+{% endblock %}
+
+
+{% block content %}
+
+
+<section class="page-shell">
+
+
+<div class="form-card">
+
+
+<div class="form-heading">
+
+
+<h1>
+Edit Investor Details
+</h1>
+
+
+<p>
+Update investor information and save changes.
+</p>
+
+
+</div>
+
+
+
+
+
+{% if form.non_field_errors %}
+
+<div class="error-box">
+
+{{ form.non_field_errors }}
+
+</div>
+
+{% endif %}
+
+
+
+
+
+
+
+<form method="POST" enctype="multipart/form-data" novalidate>
+
+
+{% csrf_token %}
+
+
+
+
+
+
+
+<div class="section-title">
+
+Personal User Information
+
+</div>
+
+
+
+
+
+<div class="form-grid">
+
+
+
+
+
+<div class="field">
+
+<label for="id_full_name">
+
+Full Name *
+
+</label>
+
+
+<input
+
+id="id_full_name"
+
+name="full_name"
+
+type="text"
+
+placeholder="Enter full name"
+
+value="{{ form.full_name.value|default_if_none:'' }}"
+
+required>
+
+
+{% if form.full_name.errors %}
+
+<div class="field-error">
+
+{{ form.full_name.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_dob">
+
+Date Of Birth *
+
+</label>
+
+
+
+<input
+
+id="id_dob"
+
+name="dob"
+
+type="date"
+
+value="{{ form.dob.value|date:'Y-m-d' }}"
+
+required>
+
+
+
+{% if form.dob.errors %}
+
+<div class="field-error">
+
+{{ form.dob.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_mobile">
+
+Mobile No *
+
+</label>
+
+
+
+<input
+
+id="id_mobile"
+
+name="mobile"
+
+type="text"
+
+inputmode="numeric"
+
+maxlength="10"
+
+placeholder="Enter mobile no"
+
+value="{{ form.mobile.value|default_if_none:'' }}"
+
+required>
+
+
+
+{% if form.mobile.errors %}
+
+<div class="field-error">
+
+{{ form.mobile.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_email">
+
+Email ID
+
+</label>
+
+
+
+<input
+
+id="id_email"
+
+name="email"
+
+type="email"
+
+placeholder="name@example.com"
+
+value="{{ form.email.value|default_if_none:'' }}">
+
+
+
+{% if form.email.errors %}
+
+<div class="field-error">
+
+{{ form.email.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-title">
+
+Address Details
+
+</div>
+
+
+
+
+
+
+
+<div class="form-grid three-grid">
+
+
+
+
+
+
+<div class="field full">
+
+
+<label for="id_address">
+
+Address *
+
+</label>
+
+
+
+<textarea
+
+id="id_address"
+
+name="address"
+
+placeholder="Enter house, street, area address"
+
+required>{{ form.address.value|default_if_none:'' }}</textarea>
+
+
+
+{% if form.address.errors %}
+
+<div class="field-error">
+
+{{ form.address.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_city">
+
+City *
+
+</label>
+
+
+
+<input
+
+id="id_city"
+
+name="city"
+
+type="text"
+
+placeholder="Enter city"
+
+value="{{ form.city.value|default_if_none:'' }}"
+
+required>
+
+
+{% if form.city.errors %}
+
+<div class="field-error">
+
+{{ form.city.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_state">
+
+State *
+
+</label>
+
+
+
+<input
+
+id="id_state"
+
+name="state"
+
+type="text"
+
+placeholder="Enter state"
+
+value="{{ form.state.value|default_if_none:'' }}"
+
+required>
+
+
+{% if form.state.errors %}
+
+<div class="field-error">
+
+{{ form.state.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_aadhar">
+
+Aadhar No *
+
+</label>
+
+
+
+<input
+
+id="id_aadhar"
+
+name="aadhar"
+
+type="text"
+
+maxlength="12"
+
+placeholder="12-digit Aadhar number"
+
+value="{{ form.aadhar.value|default_if_none:'' }}"
+
+required>
+
+
+{% if form.aadhar.errors %}
+
+<div class="field-error">
+
+{{ form.aadhar.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+</div>
+
+<!-- KYC & Banking Information -->
+
+
+<div class="section-title">
+
+KYC &amp; Banking Information
+
+</div>
+
+
+
+
+
+<div class="form-grid">
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_pan">
+
+PAN Card No
+
+</label>
+
+
+
+<input
+
+id="id_pan"
+
+name="pan"
+
+type="text"
+
+maxlength="10"
+
+placeholder="10-digit PAN number"
+
+value="{{ form.pan.value|default_if_none:'' }}">
+
+
+
+{% if form.pan.errors %}
+
+<div class="field-error">
+
+{{ form.pan.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_account_no">
+
+Account No *
+
+</label>
+
+
+
+<input
+
+id="id_account_no"
+
+name="account_no"
+
+type="text"
+
+placeholder="Bank account number"
+
+value="{{ form.account_no.value|default_if_none:'' }}"
+
+required>
+
+
+
+{% if form.account_no.errors %}
+
+<div class="field-error">
+
+{{ form.account_no.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_bank_name">
+
+Bank Name *
+
+</label>
+
+
+
+<input
+
+id="id_bank_name"
+
+name="bank_name"
+
+type="text"
+
+placeholder="Bank name"
+
+value="{{ form.bank_name.value|default_if_none:'' }}"
+
+required>
+
+
+
+{% if form.bank_name.errors %}
+
+<div class="field-error">
+
+{{ form.bank_name.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_branch">
+
+Branch *
+
+</label>
+
+
+
+<input
+
+id="id_branch"
+
+name="branch"
+
+type="text"
+
+placeholder="Branch name"
+
+value="{{ form.branch.value|default_if_none:'' }}"
+
+required>
+
+
+
+{% if form.branch.errors %}
+
+<div class="field-error">
+
+{{ form.branch.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="field full">
+
+
+<label for="id_ifsc_code">
+
+IFSC Code *
+
+</label>
+
+
+
+<input
+
+id="id_ifsc_code"
+
+name="ifsc_code"
+
+type="text"
+
+placeholder="IFSC code"
+
+value="{{ form.ifsc_code.value|default_if_none:'' }}"
+
+required>
+
+
+
+{% if form.ifsc_code.errors %}
+
+<div class="field-error">
+
+{{ form.ifsc_code.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Nominee Information -->
+
+
+<div class="section-title">
+
+Nominee Information
+
+</div>
+
+
+
+
+
+
+<div class="form-grid">
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_nominee">
+
+Nominee *
+
+</label>
+
+
+
+<input
+
+id="id_nominee"
+
+name="nominee"
+
+type="text"
+
+placeholder="Nominee full name"
+
+value="{{ form.nominee.value|default_if_none:'' }}"
+
+required>
+
+
+
+{% if form.nominee.errors %}
+
+<div class="field-error">
+
+{{ form.nominee.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="field">
+
+
+<label for="id_nominee_relation">
+
+Relationship *
+
+</label>
+
+
+
+<input
+
+id="id_nominee_relation"
+
+name="nominee_relation"
+
+type="text"
+
+placeholder="Spouse, Son, Father"
+
+value="{{ form.nominee_relation.value|default_if_none:'' }}"
+
+required>
+
+
+
+{% if form.nominee_relation.errors %}
+
+<div class="field-error">
+
+{{ form.nominee_relation.errors.0 }}
+
+</div>
+
+{% endif %}
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<button
+
+class="primary-button"
+
+type="submit"
+
+>
+
+Update Investor Details
+
+</button>
+
+
+
+
+
+<div class="form-link">
+
+
+<a href="{% url 'administrator:admin_dashboard' %}">
+
+Back to Dashboard
+
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+</form>
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+{% endblock %}
