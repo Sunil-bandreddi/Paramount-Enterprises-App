@@ -221,45 +221,62 @@ def login_view(request):
 
 
 
-
-# ============================
-# REGISTER
-# ============================
-
 def register(request):
+
+    is_first_registration = not Investor.objects.exists()
+
 
     if request.method == "POST":
 
-        form = RegisterForm(request.POST)
+
+        form = RegisterForm(
+            request.POST,
+            is_first_registration=is_first_registration
+        )
+
 
 
         if form.is_valid():
+
 
             aadhar = form.cleaned_data["aadhar"]
 
 
 
             # ============================
-            # AADHAR VALIDATION
+            # AADHAR LEVEL VALIDATION
             # ============================
 
             if not check_aadhar_allowed(aadhar):
 
                 return render(
+
                     request,
+
                     "register.html",
+
                     {
+
                         "form": form,
+
                         "error":
-                        "Aadhar already used and 6 level chain not completed"
+                        "Aadhar already used and 6 level chain not completed",
+
+                        "is_first_registration":
+                        is_first_registration
+
                     }
+
                 )
+
+
 
 
 
             # ============================
             # SPONSOR VALIDATION
             # ============================
+
 
             sponsor, error = validate_sponsor(
 
@@ -270,26 +287,37 @@ def register(request):
             )
 
 
+
             if error:
 
+
                 return render(
+
                     request,
+
                     "register.html",
+
                     {
+
                         "form": form,
-                        "error": error
+
+                        "error": error,
+
+                        "is_first_registration":
+                        is_first_registration
+
                     }
+
                 )
 
 
 
-            # ============================
-            # CREATE DJANGO USER
-            # USERNAME = AADHAR NUMBER
-            # ============================
 
 
-            aadhar = form.cleaned_data["aadhar"]
+            # ============================
+            # CREATE USER
+            # USERNAME = AADHAR
+            # ============================
 
 
             user = User.objects.create_user(
@@ -298,25 +326,21 @@ def register(request):
 
                 password=form.cleaned_data["password"],
 
-                email=form.cleaned_data["email"]
+                email=form.cleaned_data.get("email")
 
             )
 
 
-            # Optional email save
-
-            user.email = form.cleaned_data.get("email")
-
-            user.save()
 
 
 
             # ============================
-            # CREATE INVESTOR PROFILE
+            # CREATE INVESTOR
             # ============================
 
 
             investor = Investor.objects.create(
+
 
                 user=user,
 
@@ -324,54 +348,105 @@ def register(request):
                 investor_id=generate_investor_id(),
 
 
+
+                sponsor=sponsor,
+
+
+
+                placement=form.cleaned_data.get(
+                    "position"
+                ),
+
+
+
                 full_name=form.cleaned_data["full_name"],
+
 
 
                 dob=form.cleaned_data["dob"],
 
 
+
                 mobile=form.cleaned_data["mobile"],
 
 
-                email=form.cleaned_data["email"],
+
+                email=form.cleaned_data.get(
+                    "email"
+                ),
+
 
 
                 aadhar=aadhar,
 
 
-                pan=form.cleaned_data["pan"],
+
+                pan=form.cleaned_data.get(
+                    "pan"
+                ),
 
 
-                account_no=form.cleaned_data["account_no"],
+
+                account_no=form.cleaned_data[
+                    "account_no"
+                ],
 
 
-                bank_name=form.cleaned_data["bank_name"],
+
+                bank_name=form.cleaned_data[
+                    "bank_name"
+                ],
 
 
-                branch=form.cleaned_data["branch"],
+
+                branch=form.cleaned_data[
+                    "branch"
+                ],
 
 
-                ifsc_code=form.cleaned_data["ifsc_code"],
+
+                ifsc_code=form.cleaned_data[
+                    "ifsc_code"
+                ],
 
 
-                address=form.cleaned_data["address"],
+
+                address=form.cleaned_data[
+                    "address"
+                ],
 
 
-                city=form.cleaned_data["city"],
+
+                city=form.cleaned_data[
+                    "city"
+                ],
 
 
-                state=form.cleaned_data["state"],
+
+                state=form.cleaned_data[
+                    "state"
+                ],
 
 
-                nominee=form.cleaned_data["nominee"],
+
+                nominee=form.cleaned_data[
+                    "nominee"
+                ],
 
 
-                nominee_relation=form.cleaned_data["nominee_relation"],
+
+                nominee_relation=form.cleaned_data[
+                    "nominee_relation"
+                ],
+
 
 
                 status="PENDING"
 
             )
+
+
+
 
 
 
@@ -389,27 +464,44 @@ def register(request):
 
                     sponsor=sponsor,
 
-                    position=form.cleaned_data["position"],
+                    position=form.cleaned_data[
+                        "position"
+                    ],
 
-                    level=calculate_level(sponsor)
+                    level=calculate_level(
+                        sponsor
+                    )
 
                 )
 
 
 
+
+
             return render(
+
                 request,
+
                 "reg_success.html",
+
                 {
+
                     "investor": investor
+
                 }
+
             )
+
 
 
 
     else:
 
-        form = RegisterForm()
+
+        form = RegisterForm(
+            is_first_registration=is_first_registration
+        )
+
 
 
 
@@ -420,7 +512,12 @@ def register(request):
         "register.html",
 
         {
-            "form":form
+
+            "form": form,
+
+            "is_first_registration":
+            is_first_registration
+
         }
 
     )

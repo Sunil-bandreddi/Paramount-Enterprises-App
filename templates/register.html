@@ -31,6 +31,14 @@ Complete the Registration to book your plot for 10k (200 Yards) for free and mor
 
 {% endif %}
 
+{% if error %}
+
+<div class="error-box">
+{{ error }}
+</div>
+
+{% endif %}
+
 
 
 {% if is_first_registration %}
