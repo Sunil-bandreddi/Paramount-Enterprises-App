@@ -77,7 +77,7 @@ Full Name *
 
 
 <input 
-id="id_full_name"
+id="input-field"
 name="full_name"
 type="text"
 placeholder="Enter full name"
@@ -108,7 +108,7 @@ Date Of Birth *
 
 
 <input 
-id="id_dob"
+id="input-field"
 name="dob"
 type="date"
 value="{{ form.dob.value|default_if_none:'' }}"
@@ -141,9 +141,9 @@ Mobile No *
 
 
 <input 
-id="id_mobile"
+id="input-field"
 name="mobile"
-type="text"
+type="number"
 inputmode="numeric"
 maxlength="10"
 placeholder="Enter mobile no"
@@ -179,7 +179,7 @@ Email ID (Optional)
 
 
 <input 
-id="id_email"
+id="input-field"
 name="email"
 type="email"
 placeholder="name@example.com"
@@ -217,7 +217,7 @@ Sponsor ID *
 
 
 <input 
-id="id_sponsor"
+id="input-field"
 name="sponsor"
 type="text"
 placeholder="Enter sponsor id"
@@ -256,7 +256,7 @@ Placement Left : Right *
 <label class="radio-option" for="position_left">
 
 <input 
-id="position_left"
+id="input-field"
 name="position"
 type="radio"
 value="LEFT"
@@ -275,7 +275,7 @@ Left
 
 
 <input 
-id="position_right"
+id="input-field"
 name="position"
 type="radio"
 value="RIGHT"
@@ -339,7 +339,7 @@ Address *
 
 
 <textarea 
-id="id_address"
+id="input-field"
 name="address"
 placeholder="Enter house, street, area address"
 required
@@ -375,7 +375,7 @@ City *
 
 
 <input 
-id="id_city"
+id="input-field"
 name="city"
 type="text"
 placeholder="Enter city"
@@ -414,7 +414,7 @@ State *
 
 
 <input 
-id="id_state"
+id="input-field"
 name="state"
 type="text"
 placeholder="Enter state"
@@ -452,9 +452,9 @@ Aadhar No *
 
 
 <input 
-id="id_aadhar"
+id="input-field"
 name="aadhar"
-type="text"
+type="number"
 inputmode="numeric"
 maxlength="12"
 placeholder="12-digit Aadhar number"
@@ -497,7 +497,7 @@ PAN Card No
 
 
 <input 
-id="id_pan"
+id="input-field"
 name="pan"
 type="text"
 maxlength="10"
@@ -528,9 +528,10 @@ Account No *
 
 
 <input 
-id="id_account_no"
+id="input-field"
 name="account_no"
-type="text"
+type="number"
+inputmode="numeric"
 placeholder="Bank account number"
 value="{{ form.account_no.value|default_if_none:'' }}"
 required
@@ -560,7 +561,7 @@ Bank Name *
 
 
 <input 
-id="id_bank_name"
+id="input-field"
 name="bank_name"
 type="text"
 placeholder="Bank name"
@@ -592,7 +593,7 @@ Branch *
 
 
 <input 
-id="id_branch"
+id="input-field"
 name="branch"
 type="text"
 placeholder="Branch name"
@@ -624,7 +625,7 @@ IFSC Code *
 
 
 <input 
-id="id_ifsc_code"
+id="input-field"
 name="ifsc_code"
 type="text"
 placeholder="IFSC code"
@@ -670,7 +671,7 @@ Nominee *
 
 
 <input 
-id="id_nominee"
+id="input-field"
 name="nominee"
 type="text"
 placeholder="Nominee full name"
@@ -703,7 +704,7 @@ Relationship *
 
 
 <input 
-id="id_nominee_relation"
+id="input-field"
 name="nominee_relation"
 type="text"
 placeholder="e.g. Spouse, Son, Father"
@@ -729,11 +730,12 @@ required
 
 <div class="field">
 
-
 <label for="id_password">
 Password *
 </label>
 
+
+<div class="password-box">
 
 <input 
 id="id_password"
@@ -742,6 +744,15 @@ type="password"
 placeholder="Password"
 required
 >
+
+
+<i 
+class="fa-solid fa-eye toggle-password"
+onclick="togglePassword('id_password', this)">
+</i>
+
+
+</div>
 
 
 {% if form.password.errors %}
@@ -761,10 +772,12 @@ required
 
 <div class="field">
 
-
 <label for="id_confirm_password">
 Confirm Password *
 </label>
+
+
+<div class="password-box">
 
 
 <input 
@@ -776,6 +789,15 @@ required
 >
 
 
+<i 
+class="fa-solid fa-eye toggle-password"
+onclick="togglePassword('id_confirm_password', this)">
+</i>
+
+
+</div>
+
+
 {% if form.confirm_password.errors %}
 
 <div class="field-error">
@@ -783,9 +805,6 @@ required
 </div>
 
 {% endif %}
-
-
-</div>
 
 
 </div>
@@ -801,7 +820,7 @@ required
 
 
 <input 
-id="id_declaration"
+id="input-field"
 name="declaration"
 type="checkbox"
 required
@@ -2865,7 +2884,7 @@ to {
 .terms-link {
 
 
-    color:#0057ff;
+    color: #ffb500;
 
     text-decoration:underline;
 
@@ -2953,7 +2972,21 @@ function openTerms(){
 
 }
 
+function togglePassword(inputId, icon) {
 
+    const input = document.getElementById(inputId);
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+
+}
 
 
 

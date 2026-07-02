@@ -28,7 +28,7 @@
         rel="stylesheet"
     >
 
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Main CSS -->
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -55,10 +55,10 @@
 
     <a href="/" class="brand">
 
-        <img src="{% static 'images/logo.png' %}" class="logo-image" alt="Paramount Logo">
+        <img src="{% static 'images/logo1.png' %}" class="logo-image" alt="Company Logo">
 
         <span>
-            <strong>Paramount</strong>
+            <strong>BKG Paramount</strong>
             <small>Enterprises</small>
         </span>
 
@@ -102,6 +102,10 @@
 
         <a href="{% url 'contact' %}">
             Contact
+        </a>
+
+        <a href="{% static 'pdf/BKG_Paramount_registration_Form.pdf' %}" download>
+           Download Application Form
         </a>
 
 
@@ -233,8 +237,8 @@
 
 
             <span class="brand-mark">
-
-                P
+                
+                <img src="{% static 'images/logo1.png' %}" class="logo-image" alt="Company Logo">
 
             </span>
 
@@ -244,7 +248,7 @@
 
 
                 <strong>
-                    Paramount Enterprises
+                   BKG Paramount Enterprises
                 </strong>
 
 
@@ -338,17 +342,17 @@
 
 
         <p>
-            Hyderabad, India
+           Location: Hyderabad, India
         </p>
 
 
         <p>
-            +91 9876543210
+           Contact: +91 9876543210
         </p>
 
 
         <p>
-            hello@paramount.in
+           Address: H.No. 15/B, Happy Homes Elegance,5th Floor, St.No.8, Habsiguda,Hyderabad,Telangana-500007
         </p>
 
 
@@ -367,8 +371,8 @@
 <div class="copyright">
 
 
-    © 2026 Paramount Enterprises.
-    All rights reserved.
+   <p> © 2026 BKG Paramount Enterprises.
+    All rights reserved.</p>
 
 
 </div>
@@ -395,24 +399,21 @@
 
 
 const menuBtn = document.getElementById("menuToggle");
-
 const nav = document.getElementById("siteNav");
 
-
-menuBtn.addEventListener("click",()=>{
-
+menuBtn.addEventListener("click", () => {
 
     nav.classList.toggle("active");
 
-
-    menuBtn.innerHTML =
-    nav.classList.contains("active")
-    ? "✕"
-    : "☰";
-
+    if(nav.classList.contains("active")){
+        menuBtn.innerHTML = "✕";
+        document.body.style.overflow = "hidden"; // Prevent background scrolling
+    }else{
+        menuBtn.innerHTML = "☰";
+        document.body.style.overflow = "";
+    }
 
 });
-
 
 
 </script>

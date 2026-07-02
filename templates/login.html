@@ -31,8 +31,7 @@ margin:auto;
 margin-bottom:20px;
 ">
 
-<img src="{% static 'images/logo.png' %}" class="logo-image" alt="Company Logo">
-
+<img src="{% static 'images/logo1.png' %}" class="logo-image" alt="Company Logo">
 </div>
 
 
@@ -47,7 +46,7 @@ User Login
 
 <p>
 
-Access your Paramount User Dashboard
+Access your BKG Paramount User Dashboard
 
 </p>
 
@@ -199,7 +198,13 @@ Register
 
 </div>
 
+<div class="form-link">
 
+    <a href="{% url 'password_reset' %}" class="forgot-password">
+        Forgot Password?
+    </a>
+
+</div>
 
 
 

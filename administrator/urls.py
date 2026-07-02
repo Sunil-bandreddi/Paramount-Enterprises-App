@@ -80,18 +80,7 @@ urlpatterns = [
 
 
 
-    # Delete Investor
-
-    path(
-
-        "investor-delete/<int:id>/",
-
-        views.delete_investor,
-
-        name="delete_investor"
-
-    ),
-
+  
 
 
 

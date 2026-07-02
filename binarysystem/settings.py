@@ -26,13 +26,13 @@ SECRET_KEY = os.environ.get(
 )
 
 
-DEBUG = False
+DEBUG = True
 
 
 ALLOWED_HOSTS = [
-    "bkgparamount.com",
-    "www.bkgparamount.com",
-    "148.135.136.60"
+    # "bkgparamount.com",
+    # "www.bkgparamount.com",
+    # "148.135.136.60"
 ]
 
 
@@ -359,13 +359,23 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Referral bonus per direct referral shown in weekly dashboard cards.
-REFERRAL_BONUS_AMOUNT = int(os.environ.get("REFERRAL_BONUS_AMOUNT", "500"))
 
 
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+# X_FRAME_OPTIONS = "DENY"
 
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = "DENY"
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
+EMAIL_HOST = "smtp.gmail.com"
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = "genesisits369@gmail.com"
+
+EMAIL_HOST_PASSWORD = "qmcl obio dfrw avbm"
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

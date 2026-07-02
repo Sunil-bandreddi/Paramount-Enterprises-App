@@ -51,7 +51,7 @@
                     <span>Current Week {{ week.week_number }}</span>
                     <strong>{{ week.total_referrals }} referrals</strong>
                     <p>{{ week.monday|date:"M d, Y" }} - {{ week.saturday|date:"M d, Y" }}</p>
-                    <p>Bonus: Rs. {{ week.bonus }}</p>
+                    
                 </div>
             {% endfor %}
 
@@ -60,7 +60,7 @@
                     <span>Previous Week {{ week.week_number }}</span>
                     <strong>{{ week.total_referrals }} referrals</strong>
                     <p>{{ week.monday|date:"M d, Y" }} - {{ week.saturday|date:"M d, Y" }}</p>
-                    <p>Bonus: Rs. {{ week.bonus }}</p>
+                    
                 </div>
             {% endfor %}
         </div>

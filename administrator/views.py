@@ -241,6 +241,7 @@ def edit_investor(request,id):
             investor.nominee=data["nominee"]
 
             investor.nominee_relation=data["nominee_relation"]
+            
 
 
             investor.save()
@@ -318,34 +319,6 @@ def edit_investor(request,id):
 
 
 
-@login_required
-@user_passes_test(admin_check)
-def delete_investor(request, id):
-
-
-    investor = get_object_or_404(
-
-        Investor,
-
-        id=id
-
-    )
-
-
-
-    if request.method == "POST":
-
-
-        investor.delete()
-
-
-
-
-    return redirect(
-
-        "administrator:admin_dashboard"
-
-    )
 
 
 

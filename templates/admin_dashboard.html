@@ -501,36 +501,7 @@ Edit
 
 
 
-<form
 
-method="POST"
-
-action="{% url 'administrator:delete_investor' item.user.id %}"
-
-style="display:inline;"
-
->
-
-
-{% csrf_token %}
-
-
-
-<button
-
-class="action-btn deactivate"
-
-onclick="return confirm('Are you sure you want to delete this investor?')"
-
->
-
-Delete
-
-</button>
-
-
-
-</form>
 
 
 <!-- STATUS CHANGE -->
