@@ -1,59 +1,42 @@
 from referral.models import ReferralTree
 
 
-
 def build_tree(user):
-
+    """
+    Recursively build referral tree.
+    """
 
     node = {
-
-
-        "id": user.investor_id,
-
-
-        "name": user.full_name,
-
-
-        "status": user.status,
-
-
+        "investor": user,
         "position": "ROOT",
-
-
+        "level": 0,
         "children": []
-
-
     }
 
+    def add_children(parent_node, sponsor, level):
+        referrals = ReferralTree.objects.filter(sponsor=sponsor)
 
+        for referral in referrals:
 
-    children = ReferralTree.objects.filter(
+            child_node = {
+                "investor": referral.investor,
+                "position": referral.position,
+                "level": level,
+                "children": []
+            }
 
-        sponsor=user
+            add_children(
+                child_node,
+                referral.investor,
+                level + 1
+            )
 
+            parent_node["children"].append(child_node)
+
+    add_children(
+        node,
+        user,
+        1
     )
-
-
-
-    for child in children:
-
-
-        child_node = build_tree(
-
-            child.investor
-
-        )
-
-
-        child_node["position"] = child.position
-
-
-        node["children"].append(
-
-            child_node
-
-        )
-
-
 
     return node
