@@ -9,7 +9,7 @@ import os
 
 
 # -------------------------------------------------
-# BASE DIRECTORY
+# BASE DIRECTORY bases
 # -------------------------------------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
