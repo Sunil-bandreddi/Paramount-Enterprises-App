@@ -2959,12 +2959,12 @@ to {
 
 <script>
 
-    document.querySelector('input[name="mobile"]').addEventListener("input", function () {
-    this.value = this.value.replace(/\D/g, "").slice(0, 10);
+document.querySelector('input[name="mobile"]').addEventListener("input", function () {
+    this.value = this.value.replace(/\D/g, "");
 });
 
 document.querySelector('input[name="aadhar"]').addEventListener("input", function () {
-    this.value = this.value.replace(/\D/g, "").slice(0, 12);
+    this.value = this.value.replace(/\D/g, "");
 });
 
 

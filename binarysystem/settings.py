@@ -26,13 +26,13 @@ SECRET_KEY = os.environ.get(
 )
 
 
-DEBUG = True
+DEBUG = False
 
 
 ALLOWED_HOSTS = [
-    # "bkgparamount.com",
-    # "www.bkgparamount.com",
-    # "148.135.136.60"
+    "bkgparamount.com",
+    "www.bkgparamount.com",
+    "148.135.136.60"
 ]
 
 
