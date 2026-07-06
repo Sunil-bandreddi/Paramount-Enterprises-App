@@ -140,15 +140,14 @@ Mobile No *
 </label>
 
 
-<input 
-id="input-field"
-name="mobile"
-type="number"
-inputmode="numeric"
-maxlength="10"
-placeholder="Enter mobile no"
-value="{{ form.mobile.value|default_if_none:'' }}"
-required
+<input
+    type="tel"
+    name="mobile"
+    maxlength="10"
+    minlength="10"
+    pattern="[0-9]{10}"
+    inputmode="numeric"
+    required
 >
 
 
@@ -451,15 +450,14 @@ Aadhar No *
 </label>
 
 
-<input 
-id="input-field"
-name="aadhar"
-type="number"
-inputmode="numeric"
-maxlength="12"
-placeholder="12-digit Aadhar number"
-value="{{ form.aadhar.value|default_if_none:'' }}"
-required
+<input
+    type="text"
+    name="aadhar"
+    maxlength="12"
+    minlength="12"
+    pattern="[0-9]{12}"
+    inputmode="numeric"
+    required
 >
 
 
@@ -2960,6 +2958,14 @@ to {
 
 
 <script>
+
+    document.querySelector('input[name="mobile"]').addEventListener("input", function () {
+    this.value = this.value.replace(/\D/g, "").slice(0, 10);
+});
+
+document.querySelector('input[name="aadhar"]').addEventListener("input", function () {
+    this.value = this.value.replace(/\D/g, "").slice(0, 12);
+});
 
 
 // Open Terms Popup

@@ -475,27 +475,30 @@ def download_report(request):
 
 
     worksheet.append([
-
-
-        "Investor ID",
-
-        "Name",
-
-        "Mobile",
-
-        "Email",
-
-        "Status",
-
-        "Left",
-
-        "Right",
-
-        "Pairs",
-
-        "Created Date"
-
-
+    "Investor ID",
+    "Full Name",
+    "Date of Birth",
+    "Mobile",
+    "Email",
+    "Aadhar",
+    "PAN",
+    "Account Number",
+    "Bank Name",
+    "Branch",
+    "IFSC Code",
+    "Address",
+    "City",
+    "State",
+    "Nominee",
+    "Nominee Relation",
+    "Status",
+    "Sponsor ID",
+    "Sponsor Name",
+    "Placement",
+    "Left Members",
+    "Right Members",
+    "Pairs",
+    "Created Date"
     ])
 
 
@@ -506,56 +509,34 @@ def download_report(request):
 
     for investor in users:
 
-
-
-        pair = get_pair_details(
-
-            investor
-
-        )
-
-
-
+        pair = get_pair_details(investor)
 
         worksheet.append([
-
-
             investor.investor_id,
-
-
             investor.full_name,
-
-
+            investor.dob.strftime("%d-%m-%Y") if investor.dob else "",
             investor.mobile,
-
-
-            investor.email,
-
-
+            investor.email or "",
+            investor.aadhar,
+            investor.pan or "",
+            investor.account_no,
+            investor.bank_name,
+            investor.branch,
+            investor.ifsc_code,
+            investor.address,
+            investor.city,
+            investor.state,
+            investor.nominee,
+            investor.nominee_relation,
             investor.status,
-
-
+            investor.sponsor.investor_id if investor.sponsor else "",
+            investor.sponsor.full_name if investor.sponsor else "",
+            investor.placement or "",
             pair["left"],
-
-
             pair["right"],
-
-
             pair["pairs"],
-
-
-            investor.created.strftime(
-
-                "%d-%m-%Y"
-
-            )
-
-
+            investor.created.strftime("%d-%m-%Y %H:%M:%S")
         ])
-
-
-
-
 
 
 

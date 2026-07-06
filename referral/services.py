@@ -8,77 +8,45 @@ from referral.models import ReferralTree
 def get_downline_count(user,level=0):
 
 
-    if level>=6:
+    if level > 6:
+        return True
 
-        return 0
+    left = ReferralTree.objects.filter(
+        sponsor=user,
+        position="LEFT"
+    ).first()
 
+    right = ReferralTree.objects.filter(
+        sponsor=user,
+        position="RIGHT"
+    ).first()
 
+    if not left or not right:
+        return False
 
-    total=0
-
-
-
-    children=ReferralTree.objects.filter(
-
-        sponsor=user
-
+    return (
+        get_downline_count(left.investor, level + 1)
+        and
+        get_downline_count(right.investor, level + 1)
     )
-
-
-
-    for child in children:
-
-
-        total+=1
-
-
-        total+=get_downline_count(
-
-            child.investor,
-
-            level+1
-
-        )
-
-
-
-    return total
-
-
-
 
 
 
 def check_aadhar_allowed(aadhar):
 
-
-    users=Investor.objects.filter(
-
+    users = Investor.objects.filter(
         aadhar=aadhar
-
     )
 
-
-
     if not users.exists():
-
         return True
-
-
-
 
     for user in users:
 
-
-        if get_downline_count(user)<126:
-
-
+        if not get_downline_count(user):
             return False
 
-
-
     return True
-
 
 
 
