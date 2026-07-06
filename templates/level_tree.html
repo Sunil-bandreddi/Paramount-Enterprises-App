@@ -1,107 +1,39 @@
-<div class="level-card">
-
-
-<div class="level-header">
-
-
-<h3>
-
-Level {{node.level}}
-
-</h3>
-
-
-
-<span class="position">
-
-{% if node.position %}
-
-{{node.position}}
-
-{% endif %}
-
-</span>
-
-
-</div>
-
-
-
-
-
-<div class="investor-details">
-
-
-<p>
-
-<strong>ID:</strong>
-
-{{node.investor.investor_id}}
-
-</p>
-
-
-
-
-<p>
-
-<strong>Name:</strong>
-
-{{node.investor.full_name}}
-
-</p>
-
-
-
-
-<p>
-
-<strong>Mobile:</strong>
-
-{{node.investor.mobile}}
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-{% if node.children %}
-
-
-<div class="children-container">
-
-
-
-{% for child in node.children %}
-
-
-<div class="child-node">
-
-
-{% include "level_tree.html" with node=child %}
-
-
-</div>
-
-
-{% endfor %}
-
-
-
-</div>
-
-
-
-{% endif %}
-
-
-
-
+{% load static %}
+<div class="tree-node">
+
+  <div class="level-card {% if node.investor.is_active %}status-active{% else %}status-inactive{% endif %}">
+
+    <div class="level-header">
+      <span class="level-label">
+        {% if node.level == 0 %}Root{% else %}Level {{ node.level }}{% endif %}
+      </span>
+      {% if node.position and node.position != "ROOT" %}
+        <span class="position position-{{ node.position|lower }}">{{ node.position }}</span>
+      {% endif %}
+      <span class="status-badge">
+        {% if node.investor.is_active %}Active{% else %}Inactive{% endif %}
+      </span>
+    </div>
+
+    <div class="investor-details">
+      <p class="investor-id">{{ node.investor.investor_id }}</p>
+      <p class="investor-name">{{ node.investor.full_name }}</p>
+      <p class="investor-mobile">
+        <i class="ti ti-phone"></i>{{ node.investor.mobile }}
+      </p>
+    </div>
+
+  </div>
+
+  {% if node.children %}
+    <div class="children-container">
+      {% for child in node.children %}
+        <div class="child-branch">
+          <div class="connector-vertical"></div>
+          {% include "level_tree.html" with node=child %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 
 </div>

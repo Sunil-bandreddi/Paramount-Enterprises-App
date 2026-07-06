@@ -31,6 +31,7 @@
             <span>Current Week</span>
             <strong>{{ monday|date:"M d" }} - {{ saturday|date:"M d" }}</strong>
         </div>
+
     </div>
 
     <div class="panel">
@@ -51,7 +52,7 @@
                     <span>Current Week {{ week.week_number }}</span>
                     <strong>{{ week.total_referrals }} referrals</strong>
                     <p>{{ week.monday|date:"M d, Y" }} - {{ week.saturday|date:"M d, Y" }}</p>
-                    
+                    <p><b>Level:</b> {{ week.level }}</p>
                 </div>
             {% endfor %}
 
@@ -60,7 +61,7 @@
                     <span>Previous Week {{ week.week_number }}</span>
                     <strong>{{ week.total_referrals }} referrals</strong>
                     <p>{{ week.monday|date:"M d, Y" }} - {{ week.saturday|date:"M d, Y" }}</p>
-                    
+                    <p><b>Level:</b> {{ week.level }}</p>
                 </div>
             {% endfor %}
         </div>

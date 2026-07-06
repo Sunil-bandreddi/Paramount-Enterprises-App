@@ -27,38 +27,126 @@ def get_week_number(start_date, today=None):
     return ((current_monday - start_date).days // 7) + 1
 
 
+# def get_referral_week_summaries(investor):
+#     current_monday, current_saturday = get_current_week_dates()
+#     bonus_amount = getattr(settings, "REFERRAL_BONUS_AMOUNT", 0)
+
+#     referrals = (
+#         ReferralTree.objects.filter(sponsor=investor)
+#         .only("id", "created")
+#         .order_by("-created")
+#     )
+
+#     grouped_counts = {}
+#     for referral in referrals:
+#         created_date = timezone.localtime(referral.created).date()
+#         week_start, _ = get_current_week_dates(created_date)
+#         grouped_counts[week_start] = grouped_counts.get(week_start, 0) + 1
+
+#     summaries = []
+#     for week_start, total_referrals in sorted(grouped_counts.items(), reverse=True):
+#         week_end = week_start + timedelta(days=5)
+#         is_current = week_start == current_monday
+#         summaries.append(
+#             {
+#                 "week_number": get_week_number(week_start),
+#                 "monday": week_start,
+#                 "saturday": week_end,
+#                 "total_referrals": total_referrals,
+           
+#                 "status": "CURRENT" if is_current else "PREVIOUS",
+#             }
+#         )
+
+#     if not any(item["status"] == "CURRENT" for item in summaries):
+#         summaries.insert(
+#             0,
+#             {
+#                 "week_number": get_week_number(current_monday),
+#                 "monday": current_monday,
+#                 "saturday": current_saturday,
+#                 "total_referrals": 0,
+             
+#                 "status": "CURRENT",
+#             },
+#         )
+
+#     return summaries
+
+
+from datetime import timedelta
+
+from django.utils import timezone
+
+from referral.models import ReferralTree
+
+
 def get_referral_week_summaries(investor):
+
     current_monday, current_saturday = get_current_week_dates()
-    bonus_amount = getattr(settings, "REFERRAL_BONUS_AMOUNT", 0)
 
     referrals = (
-        ReferralTree.objects.filter(sponsor=investor)
-        .only("id", "created")
+        ReferralTree.objects.filter(
+            sponsor=investor
+        )
+        .only(
+            "created",
+            "level"
+        )
         .order_by("-created")
     )
 
-    grouped_counts = {}
+    grouped = {}
+
     for referral in referrals:
-        created_date = timezone.localtime(referral.created).date()
+
+        created_date = timezone.localtime(
+            referral.created
+        ).date()
+
         week_start, _ = get_current_week_dates(created_date)
-        grouped_counts[week_start] = grouped_counts.get(week_start, 0) + 1
+
+        if week_start not in grouped:
+            grouped[week_start] = {
+                "total_referrals": 0,
+                "max_level": 0,
+            }
+
+        grouped[week_start]["total_referrals"] += 1
+
+        grouped[week_start]["max_level"] = max(
+            grouped[week_start]["max_level"],
+            referral.level
+        )
 
     summaries = []
-    for week_start, total_referrals in sorted(grouped_counts.items(), reverse=True):
+
+    for week_start, data in sorted(
+        grouped.items(),
+        reverse=True
+    ):
+
         week_end = week_start + timedelta(days=5)
-        is_current = week_start == current_monday
+
         summaries.append(
             {
                 "week_number": get_week_number(week_start),
                 "monday": week_start,
                 "saturday": week_end,
-                "total_referrals": total_referrals,
-                "bonus": total_referrals * bonus_amount,
-                "status": "CURRENT" if is_current else "PREVIOUS",
+                "total_referrals": data["total_referrals"],
+                "level": data["max_level"],
+                "status": (
+                    "CURRENT"
+                    if week_start == current_monday
+                    else "PREVIOUS"
+                ),
             }
         )
 
-    if not any(item["status"] == "CURRENT" for item in summaries):
+    if not any(
+        item["status"] == "CURRENT"
+        for item in summaries
+    ):
         summaries.insert(
             0,
             {
@@ -66,9 +154,9 @@ def get_referral_week_summaries(investor):
                 "monday": current_monday,
                 "saturday": current_saturday,
                 "total_referrals": 0,
-                "bonus": 0,
+                "level": 0,
                 "status": "CURRENT",
-            },
+            }
         )
 
     return summaries
