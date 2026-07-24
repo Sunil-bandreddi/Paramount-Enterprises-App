@@ -86,6 +86,23 @@ Aadhar Number
 <div class="detail-row">
 
 <div class="label">
+Login Username
+</div>
+
+<div class="value highlight">
+
+{{ investor.user.username }}
+
+</div>
+
+</div>
+
+
+
+
+<div class="detail-row">
+
+<div class="label">
 Mobile Number
 </div>
 
@@ -131,7 +148,7 @@ Important:
 
 <p>
 
-Please save your Generated ID. You need this ID for all future communication and account access.
+Please save the Generated ID and Login Username. You need the Login Username (with the password set during registration) for all future account access.
 
 </p>
 
@@ -142,7 +159,17 @@ Please save your Generated ID. You need this ID for all future communication and
 
 
 
-<a href="{% url 'login' %}" class="primary-button">
+<a href="{% url 'administrator:admin_dashboard' %}" class="primary-button">
+
+
+Return To Admin Dashboard
+
+
+</a>
+
+
+
+<a href="{% url 'login' %}" class="primary-button" style="background:transparent;color:#0057ff;border:1px solid #0057ff;margin-top:12px;">
 
 
 Continue To Login

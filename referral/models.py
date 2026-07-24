@@ -211,11 +211,10 @@ class WeeklyActivity(models.Model):
 
 
 
-    total_referrals = models.PositiveIntegerField(
+    total_referrals = models.PositiveIntegerField(default=0)
 
-        default=0
-
-    )
+    # ADD THIS:
+    level = models.PositiveIntegerField(default=0)
 
 
 

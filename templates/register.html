@@ -725,6 +725,20 @@ required
 
 
 
+{% if is_seed_registration %}
+<div class="field">
+<label for="id_username">Login Username *</label>
+<input id="input-field" name="username" type="text"
+placeholder="Choose a login username for this account"
+value="{{ form.username.value|default_if_none:'' }}" required>
+{% if form.username.errors %}
+<div class="field-error">{{ form.username.errors.0 }}</div>
+{% endif %}
+<p class="muted" style="font-size:12px;margin-top:4px;">
+This is one of the company's first 3 accounts (CEO / employee), so it logs in with this username instead of the Aadhar number.
+</p>
+</div>
+{% endif %}
 
 <div class="field">
 

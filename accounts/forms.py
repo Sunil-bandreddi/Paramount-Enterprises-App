@@ -63,6 +63,17 @@ class RegisterForm(forms.Form):
 
 
 
+    # Only used for the first 3 (seed / company) registrations -
+    # CEO + 2 employees log in with a plain username instead of their
+    # Aadhar number, since their Aadhar values are not treated as
+    # unique login credentials for these seed accounts.
+    username = forms.CharField(
+        max_length=150,
+        required=False
+    )
+
+
+
     address = forms.CharField(
         widget=forms.Textarea
     )
@@ -154,16 +165,12 @@ class RegisterForm(forms.Form):
         self,
         *args,
         is_first_registration=False,
+        is_seed_registration=False,
         **kwargs
     ):
-
-        super().__init__(
-            *args,
-            **kwargs
-        )
-
-
+        super().__init__(*args, **kwargs)
         self.is_first_registration = is_first_registration
+        self.is_seed_registration = is_seed_registration
 
 
 
@@ -177,53 +184,23 @@ class RegisterForm(forms.Form):
     def clean_mobile(self):
 
         mobile = "".join(
-
-            filter(
-
-                str.isdigit,
-
-                self.cleaned_data.get("mobile","")
-
-            )
-
+            filter(str.isdigit, self.cleaned_data.get("mobile", ""))
         )
 
-
         if len(mobile) != 10:
+            raise forms.ValidationError("Enter a valid 10-digit mobile number.")
 
-            raise forms.ValidationError(
+        # Seed accounts (#1-3 / CEO + 2 employees) are exempt - their
+        # mobile numbers can repeat, since these are internal company
+        # accounts, not separate real customers.
+        if self.is_seed_registration:
+            return mobile
 
-                "Enter a valid 10-digit mobile number."
+        if Investor.objects.filter(mobile=mobile).exists():
+            raise forms.ValidationError("This mobile number is already registered.")
 
-            )
-
-
-
-        if Investor.objects.filter(
-            mobile=mobile
-        ).exists():
-
-
-            raise forms.ValidationError(
-
-                "This mobile number is already registered."
-
-            )
-
-
-
-        if User.objects.filter(
-            username=mobile
-        ).exists():
-
-
-            raise forms.ValidationError(
-
-                "This mobile number is already registered."
-
-            )
-
-
+        if User.objects.filter(username=mobile).exists():
+            raise forms.ValidationError("This mobile number is already registered.")
 
         return mobile
 
@@ -239,57 +216,18 @@ class RegisterForm(forms.Form):
 
     def clean_aadhar(self):
 
-
         aadhar = "".join(
-
-            filter(
-
-                str.isdigit,
-
-                self.cleaned_data.get("aadhar","")
-
-            )
-
+            filter(str.isdigit, self.cleaned_data.get("aadhar", ""))
         )
 
-
-
         if len(aadhar) != 12:
+            raise forms.ValidationError("Enter a valid 12-digit Aadhar number.")
 
-
-            raise forms.ValidationError(
-
-                "Enter a valid 12-digit Aadhar number."
-
-            )
-
-
-
-        if Investor.objects.filter(
-            aadhar=aadhar
-        ).exists():
-
-
-            raise forms.ValidationError(
-
-                "This Aadhar number is already registered."
-
-            )
-
-
-
-        if User.objects.filter(
-            username=aadhar
-        ).exists():
-
-
-            raise forms.ValidationError(
-
-                "This Aadhar number is already registered."
-
-            )
-
-
+        # NOTE: Aadhar uniqueness is intentionally NOT enforced here.
+        # From investor #4 onward, the same Aadhar CAN be reused (up to
+        # 3 times, gated on 6-level downline completion) - that check
+        # is done in accounts.views.register() via
+        # referral.services.check_aadhar_allowed().
 
         return aadhar
 
@@ -489,8 +427,29 @@ class RegisterForm(forms.Form):
             cleaned_data["position"] = None
 
 
+        # ============================
+        # USERNAME CHECK (first 3 / seed registrations only)
+        # ============================
+
+        # ============================
+        # USERNAME CHECK (first 3 / seed registrations only)
+        # ============================
+
+        if self.is_seed_registration:
+
+            username = (cleaned_data.get("username", "") or "").strip()
+
+            if not username:
+                self.add_error("username", "Username is required for this seed (company) account.")
+            elif User.objects.filter(username=username).exists():
+                self.add_error("username", "This username is already taken.")
+            else:
+                cleaned_data["username"] = username
 
         return cleaned_data
+
+
+      
 
 
 

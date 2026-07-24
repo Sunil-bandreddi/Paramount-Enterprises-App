@@ -57,7 +57,7 @@ class Investor(models.Model):
 
     mobile = models.CharField(
         max_length=10,
-        unique=True
+        
     )
 
 
@@ -69,8 +69,7 @@ class Investor(models.Model):
 
 
     aadhar = models.CharField(
-        max_length=12,
-        unique=True
+        max_length=12
     )
 
 
